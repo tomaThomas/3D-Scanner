@@ -1,7 +1,10 @@
 import stepper
+import time
 
 def run():
-    stepper.rotate(5)
+    while True:
+        stepper.step()
+        time.sleep(1)
 
 if __name__ == "__main__":
     run()

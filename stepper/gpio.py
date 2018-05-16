@@ -4,8 +4,8 @@ firstPin = -10
 out = [False, False, False, False]
 
 def init(startPin):
-    global pin
-    pin = startPin
+    global firstPin
+    firstPin = startPin
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(firstPin, GPIO.OUT)
     GPIO.setup(firstPin + 1, GPIO.OUT)

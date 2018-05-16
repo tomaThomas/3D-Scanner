@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/3D-Scanner.iml" filepath="$PROJECT_DIR$/3D-Scanner.iml" />
       <module fileurl="file://$PROJECT_DIR$/stepper/stepper.iml" filepath="$PROJECT_DIR$/stepper/stepper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-interface/web-interface.iml" filepath="$PROJECT_DIR$/web-interface/web-interface.iml" />
     </modules>
   </component>
 </project>

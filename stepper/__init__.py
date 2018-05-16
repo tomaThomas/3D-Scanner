@@ -6,7 +6,7 @@ startPin = 22
 print("Init stepper")
 
 def rotate(degrees):
-    print("rotating " + str(degrees) + "°")
+    print("rotating " + str(degrees) + " degrees")
 
 def step():
     pause = 0.1

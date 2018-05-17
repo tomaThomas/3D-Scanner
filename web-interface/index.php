@@ -3,6 +3,7 @@
     <title>3D-Scanner</title>
 </head>
 <body>
+<script>setTimeout(function() { window.location=window.location;},1000);</script>
 <p>Last <a href="log.txt">stdout</a> | <a href="error.txt">stderr</a></p>
 <p><a href="test.png">Testbild</a></p>
 <p>Status:
@@ -16,5 +17,6 @@
     }
     ?>
 </p>
+<p><a href="pull">Pull changes</a></p>
 </body>
 </html>

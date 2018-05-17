@@ -27,4 +27,7 @@ def step():
     time.sleep(pause)
     gpio.setGPIOs(0,0,0,1)
 
+    def cleanup():
+        gpio.cleanup()
+
 gpio.init(startPin)

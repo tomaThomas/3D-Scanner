@@ -24,3 +24,6 @@ def toggle(pin):
     global out
     out[pin] = not out[pin]
     GPIO.output(pin + firstPin, out[pin])
+
+def cleanup():
+    GPIO.cleanup()

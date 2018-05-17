@@ -17,6 +17,6 @@
     }
     ?>
 </p>
-<p><a href="pull">Pull changes</a></p>
+<p><a href="pull" target="_blank">Pull changes</a></p>
 </body>
 </html>

@@ -9,7 +9,7 @@
     include_once 'functions.php';
     $pid = getPid();
     if($pid == -1) {
-        echo "Not running";
+        echo "Not running<br /><a href='run.php'>Start</a>";
     } else {
         echo "Running<br />Pid: $pid";
     }

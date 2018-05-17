@@ -7,9 +7,10 @@ $pid = getPid();
 
 if ($pid == -1){
     exec("python3 /home/pi/3D-Scanner/run.py", $output, $returnValue);
-    foreach($output as $value) {
+    /*foreach($output as $value) {
         echo $value."<br />";
     }
-    echo "<br />".$returnValue;
+    echo "<br />".$returnValue;*/
+    header("Location: /");
 }
 ?>

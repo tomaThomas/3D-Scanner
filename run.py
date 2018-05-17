@@ -7,7 +7,7 @@ import cam
 def run():
     while True:
         img = cam.capture_image()
-        cam.save_image('/web-interface/test.png', img)
+        cam.save_image('web-interface/test.png', img)
         stepper.step()
         time.sleep(1)
 

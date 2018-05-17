@@ -6,8 +6,8 @@ include_once 'functions.php';
 $pid = getPid();
 
 if ($pid == -1){
-    exec("python3 /home/pi/3D-Scanner/run.py", $output, $returnValue);
-    /*foreach($output as $value) {
+/*    exec("bash /home/pi/3D-Scanner/run.sh", $output, $returnValue);
+    foreach($output as $value) {
         echo $value."<br />";
     }
     echo "<br />".$returnValue;*/

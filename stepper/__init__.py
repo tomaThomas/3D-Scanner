@@ -1,4 +1,4 @@
-import gpio
+from .gpio import *
 import time
 
 startPin = 22
@@ -29,5 +29,6 @@ def step():
 
     def cleanup():
         gpio.cleanup()
+
 
 gpio.init(startPin)

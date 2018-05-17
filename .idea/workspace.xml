@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ce56055-946f-4c89-a3fd-93abf1006fba" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stepper/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/stepper/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cam/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cam/__init__.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,22 +18,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/stepper/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gpio.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stepper/gpio.py">
+        <entry file="file://$PROJECT_DIR$/cam/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
-              <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
+              <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -69,6 +56,7 @@
         <option value="$PROJECT_DIR$/web-interface/index.php" />
         <option value="$PROJECT_DIR$/run.py" />
         <option value="$PROJECT_DIR$/stepper/__init__.py" />
+        <option value="$PROJECT_DIR$/cam/__init__.py" />
       </list>
     </option>
   </component>
@@ -235,7 +223,7 @@
       <workItem from="1526488057552" duration="87000" />
       <workItem from="1526541614782" duration="948000" />
       <workItem from="1526558899061" duration="13000" />
-      <workItem from="1526562991719" duration="1857000" />
+      <workItem from="1526562991719" duration="2257000" />
     </task>
     <task id="LOCAL-00001" summary="README.md">
       <created>1526393285815</created>
@@ -286,11 +274,18 @@
       <option name="project" value="LOCAL" />
       <updated>1526563247735</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="change import">
+      <created>1526565013910</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1526565013910</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14429000" />
+    <option name="totallyTimeSpent" value="14829000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -341,7 +336,8 @@
     <MESSAGE value="web-interface module" />
     <MESSAGE value="added cam module" />
     <MESSAGE value="capture and save images" />
-    <option name="LAST_COMMIT_MESSAGE" value="capture and save images" />
+    <MESSAGE value="change import" />
+    <option name="LAST_COMMIT_MESSAGE" value="change import" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/stepper/__init__.py">
@@ -641,13 +637,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cam/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stepper/stepper.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -661,6 +650,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/stepper/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="13" column="26" lean-forward="true" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/stepper/gpio.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -668,13 +667,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stepper/__init__.py">
+    <entry file="file://$PROJECT_DIR$/cam/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="198">
+          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
         </state>
       </provider>
     </entry>

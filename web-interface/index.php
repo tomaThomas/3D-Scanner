@@ -3,7 +3,8 @@
     <title>3D-Scanner</title>
 </head>
 <body>
-<p><a href="log.txt">Last log</a></p>
+<p>Last <a href="log.txt">stdout</a> | <a href="error.txt">stderr</a></p>
+<p><a href="test.png">Testbild</a></p>
 <p>Status:
     <?php
     include_once 'functions.php';

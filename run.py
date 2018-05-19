@@ -8,10 +8,13 @@ import json
 
 running = False
 
+img = None
+
 
 async def msg_receive(socket, path):
     print("client connected")
     global running
+    global img
     try:
         await socket.send(json.dumps({"running": running}))
         while True:
@@ -24,6 +27,8 @@ async def msg_receive(socket, path):
             elif msg == "start":
                 running = True
                 await socket.send(json.dumps({"running": running}))
+            elif msg == "img":
+                await socket.send(json.dumps({"img": cam.image_encode(img)}))
             elif msg == "stop":
                 running = False
                 await socket.send(json.dumps({"running": running}))
@@ -37,6 +42,7 @@ async def msg_receive(socket, path):
 
 async def main_loop():
     print("main loop started")
+    global img
     while True:
         try:
             if running:

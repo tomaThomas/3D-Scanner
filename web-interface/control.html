@@ -22,19 +22,24 @@
                 console.log("message received: " + e.data);
                 data = JSON.parse(e.data);
                 if(data.hasOwnProperty("running")) {
-                    console.log(data.running);
                     if(data.running === true){
                         setStatus("started")
                     }else{
                         setStatus("stopped")
                     }
+                }if(data.hasOwnProperty("img")){
+                    document.getElementById("testimg").src = "data:image/png;base64," + data.img;
                 }
             }
-        }
+        };
+
+        window.setInterval(function () {
+            socket.send("img")
+        }, 1000)
 
         start = function () {
             if(socket.readyState === socket.OPEN){
-                setStatus("starting scan...")
+                setStatus("starting scan...");
                 socket.send("start");
             }else{
                 setStatus("can't start: no connection");
@@ -59,5 +64,6 @@
     <p><a href="test_image.html">Test Image</a></p>
     <p><a href="pull.php" target="_blank">Pull changes</a></p>
     <p>Last <a href="log.txt">stdout</a> | <a href="error.txt">stderr</a></p>
+    <p><img id="testimg" src="" alt="image couldn't be loaded"></p>
 </body>
 </html>

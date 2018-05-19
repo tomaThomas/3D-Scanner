@@ -19,6 +19,6 @@ def save_image(path, img):
 def image_encode(img):
     if img is not None:
         ret, buf = cv2.imencode('.png', img)
-        res = (base64.b64encode(buf).decode('utf-8'))
+        res = (base64.b64encode(buf).decode('ascii'))
         return res
     return ""

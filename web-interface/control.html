@@ -13,7 +13,7 @@
         window.onload = function (ev) {
             setStatus("not connected");
             console.log("connecting to web socket...");
-            socket = new WebSocket("ws://" + window.location.hostname + ":8765");
+            socket = new WebSocket("ws://" + window.location.hostname + ":8888");
             socket.onopen = function (e) {
                 console.log("connection to web socket established");
                 setStatus("connection established");

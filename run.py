@@ -69,7 +69,7 @@ def main():
     print("starting event loop")
     loop = asyncio.get_event_loop()
 
-    open_socket = websockets.serve(msg_receive, 'localhost', 8765)
+    open_socket = websockets.serve(msg_receive, 'localhost', 8888)
     loop.run_until_complete(open_socket)
 
     asyncio.async(main_loop())

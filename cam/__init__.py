@@ -20,6 +20,5 @@ def image_encode(img):
     if img is not None:
         ret, buf = cv2.imencode('.png', img)
         res = (base64.b64encode(buf).decode('utf-8'))
-        print(res)
         return res
     return ""

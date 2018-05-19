@@ -61,10 +61,10 @@ def request_exit():
 
 
 def main():
-    # acquire lock
-    file = open("LOCK", "w")
-    file.write(str(os.getpid()))
-    file.close()
+    # # acquire lock
+    # file = open("LOCK", "w")
+    # file.write(str(os.getpid()))
+    # file.close()
 
     print("starting event loop")
     loop = asyncio.get_event_loop()
@@ -82,8 +82,8 @@ def main():
     loop.close()
     print("closed event loop")
 
-    # release lock
-    os.remove("LOCK")
+    # # release lock
+    # os.remove("LOCK")
 
 
 if __name__ == "__main__":

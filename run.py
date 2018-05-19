@@ -43,7 +43,7 @@ async def main_loop():
                 img = cam.capture_image()
                 cam.save_image('web-interface/test.png', img)
                 # stepper.step()
-            await asyncio.sleep(0.2)
+            await asyncio.sleep(1)
         except asyncio.CancelledError:
             print("stopping main loop")
             raise

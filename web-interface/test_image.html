@@ -5,11 +5,9 @@
     <title>Test Image</title>
     <script type="application/javascript">
         window.onload = function (ev) {
-            var a = 0;
             window.setInterval(function(){
-                a++;
                 console.log("reloading");
-                document.getElementById("testimg").src = "test.png?a=" + a;
+                document.getElementById("testimg").src = "test.png";
             }, 1000);
         }
     </script>

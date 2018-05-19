@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3D Scanner Control</title>
+    <script type="application/javascript">
+        var socket;
+
+        setStatus = function(s){
+            document.getElementById("status").innerHTML = s;
+        }
+
+        window.onload = function (ev) {
+            setStatus("not connected");
+            console.log("connecting to web socket...");
+            socket = new WebSocket("ws://" + window.location.hostname + ":8765");
+            socket.onopen = function (e) {
+                console.log("connection to web socket established");
+                setStatus("connection established");
+            }
+            socket.onmessage = function (e) {
+                console.log("message received: " + e.data);
+                data = JSON.parse(e.data);
+                if(data.hasOwnProperty("running")) {
+                    console.log(data.running);
+                    if(data.running === true){
+                        setStatus("started")
+                    }else{
+                        setStatus("stopped")
+                    }
+                }
+            }
+        }
+
+        start = function () {
+            if(socket.readyState === socket.OPEN){
+                setStatus("starting scan...")
+                socket.send("start");
+            }else{
+                setStatus("can't start: no connection");
+            }
+        }
+
+        stop = function () {
+            if(socket.readyState === socket.OPEN){
+                setStatus("stopping scan...");
+                socket.send("stop");
+            }else{
+                setStatus("can't stop: no connection");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>3D Scanner Web Interface</h1>
+    <p><button type="button" onclick="start()">Start</button></p>
+    <p><button type="button" onclick="stop()">Stop</button></p>
+    <p id="status"></p>
+    <p><a href="test_image.html">Test Image</a></p>
+    <p><a href="pull.php" target="_blank">Pull changes</a></p>
+    <p>Last <a href="log.txt">stdout</a> | <a href="error.txt">stderr</a></p>
+</body>
+</html>

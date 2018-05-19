@@ -4,6 +4,7 @@ import cam
 import os
 import asyncio
 import websockets
+import json
 
 running = False
 
@@ -11,20 +12,26 @@ running = False
 async def msg_receive(socket, path):
     print("client connected")
     global running
-    async for msg in socket:
-        print("message received: {}".format(msg))
-        if msg == "pid":
-            await socket.send("pid={}".format(os.getpid()))
-        elif msg == "running":
-            await socket.send("running={}".format(running))
-        elif msg == "start":
-            running = True
-        elif msg == "stop":
-            running = False
-        elif msg == "quit":
-            request_exit()
-        else:
-            print("unknown command: {}".format(msg))
+    try:
+        await socket.send(json.dumps({"running": running}))
+        async for msg in socket:
+            print("message received: {}".format(msg))
+            if msg == "pid":
+                await socket.send(json.dumps({"pid": os.getpid()}))
+            elif msg == "running":
+                await socket.send(json.dumps({"running": running}))
+            elif msg == "start":
+                running = True
+                await socket.send(json.dumps({"running": running}))
+            elif msg == "stop":
+                running = False
+                await socket.send(json.dumps({"running": running}))
+            elif msg == "quit":
+                request_exit()
+            else:
+                print("unknown command: {}".format(msg))
+    except websockets.exceptions.ConnectionClosed:
+        print("client disconnected")
 
 
 async def main_loop():
@@ -35,7 +42,7 @@ async def main_loop():
                 img = cam.capture_image()
                 cam.save_image('web-interface/test.png', img)
                 # stepper.step()
-            await asyncio.sleep(1)
+            await asyncio.sleep(0.2)
         except asyncio.CancelledError:
             print("stopping main loop")
             raise

@@ -14,7 +14,8 @@ async def msg_receive(socket, path):
     global running
     try:
         await socket.send(json.dumps({"running": running}))
-        async for msg in socket:
+        while True:
+            msg = await socket.recv()
             print("message received: {}".format(msg))
             if msg == "pid":
                 await socket.send(json.dumps({"pid": os.getpid()}))

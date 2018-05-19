@@ -5,23 +5,36 @@ import os
 import asyncio
 import websockets
 
+running = False
+
 
 async def msg_receive(socket, path):
     print("client connected")
+    global running
     async for msg in socket:
         print("message received: {}".format(msg))
-        answer = "echo: {}!".format(msg)
-        await socket.send(answer)
-        print("sending message: {}".format(answer))
+        if msg == "pid":
+            await socket.send("pid={}".format(os.getpid()))
+        elif msg == "running":
+            await socket.send("running={}".format(running))
+        elif msg == "start":
+            running = True
+        elif msg == "stop":
+            running = False
+        elif msg == "quit":
+            request_exit()
+        else:
+            print("unknown command: {}".format(msg))
 
 
 async def main_loop():
     print("main loop started")
     while True:
         try:
-            img = cam.capture_image()
-            cam.save_image('web-interface/test.png', img)
-            # stepper.step()
+            if running:
+                img = cam.capture_image()
+                cam.save_image('web-interface/test.png', img)
+                # stepper.step()
             await asyncio.sleep(1)
         except asyncio.CancelledError:
             print("stopping main loop")

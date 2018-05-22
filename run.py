@@ -30,7 +30,7 @@ async def msg_receive(socket, path):
             elif msg == "img":
                 await socket.send(json.dumps({"img": cam.image_encode(img)}))
             elif msg == "stepper":
-                await stepper.rotate(90)
+                await stepper.rotate(360)
             elif msg == "stop":
                 running = False
                 await socket.send(json.dumps({"running": running}))

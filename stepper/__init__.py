@@ -14,12 +14,12 @@ async def rotate(degrees):
 
 
 async def step():
-    pause = 0.1
+    pause = 0.002
     print("moving step")
     gpio.set(1, True)
-    asyncio.sleep(pause)
+    await asyncio.sleep(pause)
     gpio.set(1, False)
-    asyncio.sleep(pause)
+    await asyncio.sleep(pause)
 
 
 def cleanup():

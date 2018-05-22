@@ -1,4 +1,3 @@
-
 import cv2
 import base64
 
@@ -21,4 +20,4 @@ def image_encode(img):
         ret, buf = cv2.imencode('.png', img)
         res = (base64.b64encode(buf).decode('ascii'))
         return res
-    return ""
+    return ''

@@ -1,34 +1,29 @@
 from .gpio import *
-import time
+import asyncio
 
-startPin = 22
+startPin = 2
 
 print("Init stepper")
 
-def rotate(degrees):
-    print("rotating " + str(degrees) + " degrees")
 
-def step():
+async def rotate(degrees):
+    print("rotating " + str(degrees) + " degrees")
+    steps = degrees * 4.0 * 200.0 / 360.0
+    for i in range(0, steps):
+        await step()
+
+
+async def step():
     pause = 0.1
     print("moving step")
-    gpio.setGPIOs(1,0,0,1)
-    time.sleep(pause)
-    gpio.setGPIOs(1,0,0,0)
-    time.sleep(pause)
-    gpio.setGPIOs(1,1,0,0)
-    time.sleep(pause)
-    gpio.setGPIOs(0,1,0,0)
-    time.sleep(pause)
-    gpio.setGPIOs(0,1,1,0)
-    time.sleep(pause)
-    gpio.setGPIOs(0,0,1,0)
-    time.sleep(pause)
-    gpio.setGPIOs(0,0,1,1)
-    time.sleep(pause)
-    gpio.setGPIOs(0,0,0,1)
+    gpio.set(1, True)
+    asyncio.sleep(pause)
+    gpio.set(1, False)
+    asyncio.sleep(pause)
 
-    def cleanup():
-        gpio.cleanup()
+
+def cleanup():
+    gpio.cleanup()
 
 
 gpio.init(startPin)

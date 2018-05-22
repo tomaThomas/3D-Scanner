@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# import stepper
+import stepper
 import cam
 import os
 import asyncio
@@ -29,6 +29,8 @@ async def msg_receive(socket, path):
                 await socket.send(json.dumps({"running": running}))
             elif msg == "img":
                 await socket.send(json.dumps({"img": cam.image_encode(img)}))
+            elif msg == "stepper":
+                await stepper.rotate(90)
             elif msg == "stop":
                 running = False
                 await socket.send(json.dumps({"running": running}))

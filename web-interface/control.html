@@ -37,6 +37,15 @@
             socket.send("img")
         }, 1000)
 
+        rotate = function () {
+            if(socket.readyState === socket.OPEN){
+                setStatus("starting rotation ...")
+                socket.send("stepper")
+            }else{
+                setStatus("can't rotate: no connection")
+            }
+        }
+
         start = function () {
             if(socket.readyState === socket.OPEN){
                 setStatus("starting scan...");
@@ -60,6 +69,7 @@
     <h1>3D Scanner Web Interface</h1>
     <p><button type="button" onclick="start()">Start</button></p>
     <p><button type="button" onclick="stop()">Stop</button></p>
+    <p><button type="button" onclick="rotate()">Rotate</button></p>
     <p id="status"></p>
     <p><a href="pull.php" target="_blank">Pull changes</a></p>
     <p>Last <a href="log.txt">stdout</a> | <a href="error.txt">stderr</a></p>

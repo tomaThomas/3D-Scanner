@@ -4,21 +4,21 @@ import base64
 cap = cv2.VideoCapture(0)
 
 def set_width(value):
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, value)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, float(value))
 def set_height(value):
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, value)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, float(value))
 def set_brightness(value):
-    cap.set(cv2.CAP_PROP_BRIGHTNESS, value)
+    cap.set(cv2.CAP_PROP_BRIGHTNESS, float(value))
 def set_contrast(value):
-    cap.set(cv2.CAP_PROP_CONTRAST, value)
+    cap.set(cv2.CAP_PROP_CONTRAST, float(value))
 def set_saturation(value):
-    cap.set(cv2.CAP_PROP_SATURATION, value)
+    cap.set(cv2.CAP_PROP_SATURATION, float(value))
 def set_hue(value):
-    cap.set(cv2.CAP_PROP_HUE, value)
+    cap.set(cv2.CAP_PROP_HUE, float(value))
 def set_gain(value):
-    cap.set(cv2.CAP_PROP_GAIN, value)
+    cap.set(cv2.CAP_PROP_GAIN, float(value))
 def set_exposure(value):
-    cap.set(cv2.CAP_PROP_EXPOSURE, value)
+    cap.set(cv2.CAP_PROP_EXPOSURE, float(value))
 
 
 def capture_image():

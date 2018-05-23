@@ -34,13 +34,13 @@
         };
 
         window.setInterval(function () {
-            socket.send("img")
+            socket.send("{\"img\"}")
         }, 1000)
 
         rotate = function () {
             if(socket.readyState === socket.OPEN){
                 setStatus("starting rotation ...")
-                socket.send("stepper")
+                socket.send("{\"stepper\"}")
             }else{
                 setStatus("can't rotate: no connection")
             }
@@ -49,7 +49,7 @@
         start = function () {
             if(socket.readyState === socket.OPEN){
                 setStatus("starting scan...");
-                socket.send("start");
+                socket.send("{\"start\"}");
             }else{
                 setStatus("can't start: no connection");
             }
@@ -58,7 +58,7 @@
         stop = function () {
             if(socket.readyState === socket.OPEN){
                 setStatus("stopping scan...");
-                socket.send("stop");
+                socket.send("{\"stop\"}");
             }else{
                 setStatus("can't stop: no connection");
             }
@@ -70,6 +70,14 @@
     <p><button type="button" onclick="start()">Start</button></p>
     <p><button type="button" onclick="stop()">Stop</button></p>
     <p><button type="button" onclick="rotate()">Rotate</button></p>
+    <p><input type="number" id="width"><button type="button" onclick="socket.send(JSON.stringify({'width':document.getElementById('width').value}))">width</button></p>
+    <p><input type="number" id="height"><button type="button" onclick="socket.send(JSON.stringify({'height':document.getElementById('height').value}))">height</button></p>
+    <p><input type="number" id="brightness"><button type="button" onclick="socket.send(JSON.stringify({'brightness':document.getElementById('brightness').value}))">brightness</button></p>
+    <p><input type="number" id="contrast"><button type="button" onclick="socket.send(JSON.stringify({'contrast':document.getElementById('contrast').value}))">contrast</button></p>
+    <p><input type="number" id="saturation"><button type="button" onclick="socket.send(JSON.stringify({'saturation':document.getElementById('saturation').value}))">saturation</button></p>
+    <p><input type="number" id="hue"><button type="button" onclick="socket.send(JSON.stringify({'hue':document.getElementById('hue').value}))">hue</button></p>
+    <p><input type="number" id="gain"><button type="button" onclick="socket.send(JSON.stringify({'gain':document.getElementById('gain').value}))">gain</button></p>
+    <p><input type="number" id="exposure"><button type="button" onclick="socket.send(JSON.stringify({'exposure':document.getElementById('exposure').value}))">exposure</button></p>
     <p id="status"></p>
     <p><a href="pull.php" target="_blank">Pull changes</a></p>
     <p>Last <a href="log.txt">stdout</a> | <a href="error.txt">stderr</a></p>

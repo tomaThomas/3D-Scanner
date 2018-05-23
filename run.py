@@ -20,24 +20,40 @@ async def msg_receive(socket, path):
         while True:
             msg = await socket.recv()
             print("message received: {}".format(msg))
-            if msg == "pid":
+            msg_parsed = json.loads(msg)
+            if "pid" in msg_parsed:
                 await socket.send(json.dumps({"pid": os.getpid()}))
-            elif msg == "running":
+            if "running" in msg_parsed:
                 await socket.send(json.dumps({"running": running}))
-            elif msg == "start":
+            if "start" in msg_parsed:
                 running = True
                 await socket.send(json.dumps({"running": running}))
-            elif msg == "img":
+            if "img" in msg_parsed:
                 await socket.send(json.dumps({"img": cam.image_encode(img)}))
-            elif msg == "stepper":
+            if "stepper" in msg_parsed:
                 await stepper.rotate(360)
-            elif msg == "stop":
+            if "stop" in msg_parsed:
                 running = False
                 await socket.send(json.dumps({"running": running}))
-            elif msg == "quit":
+            if "quit" in msg_parsed:
                 request_exit()
-            else:
-                print("unknown command: {}".format(msg))
+            if "width" in msg_parsed:
+                cam.set_width(msg_parsed["width"])
+            if "height" in msg_parsed:
+                cam.set_height(msg_parsed["height"])
+            if "brightness" in msg_parsed:
+                cam.set_brightness(msg_parsed["brightness"])
+            if "contrast" in msg_parsed:
+                cam.set_contrast(msg_parsed["contrast"])
+            if "saturation" in msg_parsed:
+                cam.set_saturation(msg_parsed["saturation"])
+            if "hue" in msg_parsed:
+                cam.set_hue(msg_parsed["hue"])
+            if "gain" in msg_parsed:
+                cam.set_gain(msg_parsed["gain"])
+            if "exposure" in msg_parsed:
+                cam.set_exposure(msg_parsed["exposure"])
+
     except websockets.exceptions.ConnectionClosed:
         print("client disconnected")
 

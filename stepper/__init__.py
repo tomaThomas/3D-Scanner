@@ -8,7 +8,7 @@ print("Init stepper")
 
 async def rotate(degrees):
     print("rotating " + str(degrees) + " degrees")
-    steps = int(degrees * 4.0 * 200.0 / 360.0)
+    steps = int(degrees * 4.0 * 4.0 * 200.0 / 360.0)
     for i in range(0, steps):
         await step()
 

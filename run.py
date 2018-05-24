@@ -47,12 +47,6 @@ async def msg_receive(socket, path):
                 cam.set_contrast(msg_parsed["contrast"])
             if "saturation" in msg_parsed:
                 cam.set_saturation(msg_parsed["saturation"])
-            if "hue" in msg_parsed:
-                cam.set_hue(msg_parsed["hue"])
-            if "gain" in msg_parsed:
-                cam.set_gain(msg_parsed["gain"])
-            if "exposure" in msg_parsed:
-                cam.set_exposure(msg_parsed["exposure"])
 
     except websockets.exceptions.ConnectionClosed:
         print("client disconnected")

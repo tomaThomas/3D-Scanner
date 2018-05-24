@@ -1,7 +1,12 @@
 import cv2
 import base64
+import numpy
 
 cap = cv2.VideoCapture(0)
+
+
+def get_list():
+    return numpy.array()
 
 
 def set_width(value):

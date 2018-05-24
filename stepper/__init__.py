@@ -2,8 +2,18 @@ from .gpio import *
 import asyncio
 
 startPin = 2
+pause = 0.002
+angle = "whatever"  # TODO
 
 print("Init stepper")
+
+
+def get_angle():
+    return angle
+
+
+def next_step():
+    rotate(angle)
 
 
 async def rotate(degrees):
@@ -14,7 +24,6 @@ async def rotate(degrees):
 
 
 async def step():
-    pause = 0.002
     print("moving step")
     gpio.set(1, True)
     await asyncio.sleep(pause)

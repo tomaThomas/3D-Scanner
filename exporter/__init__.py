@@ -1,13 +1,19 @@
 import numpy as np
 
+point_list = np.array([])
+
 
 def create():
     print("Create new object...")
+    global point_list
+    point_list = np.array([])
 
 
-def add_row(array, angle):
+def add_row(array):
     print("Adding row...")
-    return np.array()
+    global point_list
+    point_list = np.vstack((point_list, array))
+    return point_list
 
 
 def export(name):

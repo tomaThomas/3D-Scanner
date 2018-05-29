@@ -29,7 +29,7 @@ async def msg_receive(socket, path):
                 running = True
                 await socket.send(json.dumps({"running": running}))
             if "stepper" in msg_parsed:
-                for a in range(0,stepper.steps_per_scan):
+                for a in range(0, stepper.get_steps_per_scan()):
                     await stepper.scan_step()
             if "stop" in msg_parsed:
                 running = False

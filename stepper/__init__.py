@@ -21,7 +21,7 @@ def get_current_angle():
 
 async def scan_step():
     global current_angle
-    steps = 800/steps_per_scan
+    steps = 800*4/steps_per_scan
     for i in range(0, int(steps)):
         await stepper_step()
     current_angle += step_angle

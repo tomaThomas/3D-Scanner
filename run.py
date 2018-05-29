@@ -28,8 +28,6 @@ async def msg_receive(socket, path):
             if "start" in msg_parsed:
                 running = True
                 await socket.send(json.dumps({"running": running}))
-            if "img" in msg_parsed:
-                await socket.send(json.dumps({"img": cam.image_encode(img)}))
             if "stepper" in msg_parsed:
                 for a in range(0,stepper.steps_per_scan):
                     await stepper.scan_step()
@@ -38,16 +36,6 @@ async def msg_receive(socket, path):
                 await socket.send(json.dumps({"running": running}))
             if "quit" in msg_parsed:
                 request_exit()
-            if "width" in msg_parsed:
-                cam.set_width(msg_parsed["width"])
-            if "height" in msg_parsed:
-                cam.set_height(msg_parsed["height"])
-            if "brightness" in msg_parsed:
-                cam.set_brightness(msg_parsed["brightness"])
-            if "contrast" in msg_parsed:
-                cam.set_contrast(msg_parsed["contrast"])
-            if "saturation" in msg_parsed:
-                cam.set_saturation(msg_parsed["saturation"])
 
     except websockets.exceptions.ConnectionClosed:
         print("client disconnected")

@@ -3,35 +3,35 @@ import asyncio
 import math
 
 startPin = 2
-pause = 0.002
+time_per_step = 0.002
 steps_per_scan = 100
-angle = 2*math.pi/steps_per_scan
+step_angle = 2 * math.pi / steps_per_scan
+current_angle = 0
 
 print("Init stepper")
 
 
-def get_angle():
-    return angle
+def get_steps_per_scan():
+    return steps_per_scan
 
 
-async def next_step():
+def get_current_angle():
+    return current_angle
+
+
+async def scan_step():
+    global current_angle
     steps = 800/steps_per_scan
     for i in range(0, steps):
-        await step()
+        await stepper_step()
+    current_angle += step_angle
 
 
-async def rotate(degrees):
-    print("rotating " + str(degrees) + " degrees")
-    steps = int(degrees * 4.0 * 4.0 * 200.0 / 360.0)
-    for i in range(0, steps):
-        await step()
-
-
-async def step():
+async def stepper_step():
     gpio.set(1, True)
-    await asyncio.sleep(pause)
+    await asyncio.sleep(time_per_step)
     gpio.set(1, False)
-    await asyncio.sleep(pause)
+    await asyncio.sleep(time_per_step)
 
 
 def cleanup():

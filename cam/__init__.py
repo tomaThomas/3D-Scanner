@@ -14,4 +14,6 @@ image = np.empty((height, width, 3), dtype=np.uint8)  # Creates empty 3-dimensio
 
 
 def get_image():
+    global image
+    global camera
     camera.capture(image, 'rgb')  # Fills array with current picture

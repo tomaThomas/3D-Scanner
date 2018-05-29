@@ -31,7 +31,8 @@ async def msg_receive(socket, path):
             if "img" in msg_parsed:
                 await socket.send(json.dumps({"img": cam.image_encode(img)}))
             if "stepper" in msg_parsed:
-                await stepper.rotate(360)
+                for a in range(0,stepper.steps_per_scan):
+                    await stepper.scan_step()
             if "stop" in msg_parsed:
                 running = False
                 await socket.send(json.dumps({"running": running}))

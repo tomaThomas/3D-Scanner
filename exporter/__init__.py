@@ -21,7 +21,6 @@ def add_row(array):
 def export(name):
     print("Exporting...")
     file_pc = open(path + name + "_pc.obj", "w")
-
     for point in np.nditer(point_list):
         file_pc.write("v " + str(point[0]) + " " + str(point[1]) + " " + str(point[2]) + "\n")
     file_pc.close()

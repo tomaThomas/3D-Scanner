@@ -22,15 +22,25 @@ def get_image():
 
 
 img = PIL.Image.open('testimg.jpg')
-
 hsvimg = img.convert("HSV")
-hsvimg.show()
 
 array = np.array(img)
 hsvarray = np.array(hsvimg)
 
+
 i = array.shape[0]
 j = array.shape[1]
-for k in range(0, 10):
-    for l in range(0, 10):
-        print(array[k][l], hsvarray[k][l])
+for k in range(0, i):
+    for l in range(0, j):
+        h = hsvarray[k][l][0]
+        s = hsvarray[k][l][1]
+        v = hsvarray[k][l][2]
+
+        hsvarray[k][l][0] = int(((1.4 * (h-237) ** 2) + (0.05 * (s-70) ** 2) + (0.008 * (v - 255) ** 2))*0.5)
+        if hsvarray[k][l][0] > 255:
+            hsvarray[k][l][0] = 255
+        hsvarray[k][l][1] = 0
+        hsvarray[k][l][2] = 0
+
+showimg = PIL.Image.fromarray(hsvarray)
+showimg.show()

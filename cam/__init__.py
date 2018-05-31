@@ -40,12 +40,13 @@ max_pix = img.argmin(1)
 # convert to displayable image
 img = np.clip(img, 0, 255)
 img = img.astype(np.uint8)
+
+# make rgb from greyscale (to enable coloring)
 img = img.reshape((img.shape[0], img.shape[1], 1))
 img = np.repeat(img, 3, axis=2)
 
 # color best pixel per line red
-img[np.arange(len(img)), max_pix] = [255, 0, 0]
+img[np.arange(img.shape[0]), max_pix] = [255, 0, 0]
 
-
-showimg = PIL.Image.fromarray(img)
-showimg.show()
+# display image
+PIL.Image.fromarray(img).show()

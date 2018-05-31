@@ -5,9 +5,18 @@
     <title>3D Scanner Control</title>
     <script src="processing.js" type="text/javascript"></script>
     <script type="text/javascript">
-        function getProcessingSketchId () { return 'sketch180523b'; }
+        function getProcessingSketchId () { return 'sketch'; }
     </script>
-    <script type="application/javascript">
+    <script type="text/javascript">
+        function setPoints(points) {
+            pjs = Processing.getInstanceById(getProcessingSketchId());
+            pjs.clearPoints()
+            for(i = 0; i < 20; i++){
+                pjs.addPoint(Math.random() * 200 - 100, Math.random() * 200 - 100, Math.random() * 200 - 100);
+            }
+        }
+    </script>
+    <script type="text/javascript">
         var socket;
 
         setStatus = function(s){
@@ -67,9 +76,20 @@
 </head>
 <body>
     <h1>3D Scanner Web Interface</h1>
+    <div style="float: right; padding-right: 100px;">
+        <canvas id="sketch" data-processing-sources="sketch/sketch.pde"
+                width="640" height="360">
+            <p>Your browser does not support the canvas tag.</p>
+            <!-- Note: you can put any alternative content here. -->
+        </canvas>
+        <noscript>
+            <p>JavaScript is required to view the contents of this page.</p>
+        </noscript>
+    </div>
     <p><button type="button" onclick="start()">Start</button></p>
     <p><button type="button" onclick="stop()">Stop</button></p>
     <p><button type="button" onclick="rotate()">Rotate</button></p>
+    <p><button type="button" onclick="setPoints()">Set Points</button></p>
     <p><input type="number" id="width"><button type="button" onclick="socket.send(JSON.stringify({'width':document.getElementById('width').value}))">width</button></p>
     <p><input type="number" id="height"><button type="button" onclick="socket.send(JSON.stringify({'height':document.getElementById('height').value}))">height</button></p>
     <p><input type="number" id="brightness"><button type="button" onclick="socket.send(JSON.stringify({'brightness':document.getElementById('brightness').value}))">brightness</button></p>
@@ -79,15 +99,6 @@
     <p><a href="pull.php" target="_blank">Pull changes</a></p>
     <p>Last <a href="log.txt">stdout</a> | <a href="error.txt">stderr</a></p>
     <p><img id="testimg" src="" alt="image couldn't be loaded"></p>
-    <div>
-        <canvas id="sketch180523b" data-processing-sources="sketch_180523b.pde"
-                width="640" height="360">
-            <p>Your browser does not support the canvas tag.</p>
-            <!-- Note: you can put any alternative content here. -->
-        </canvas>
-        <noscript>
-            <p>JavaScript is required to view the contents of this page.</p>
-        </noscript>
-    </div>
+
 </body>
 </html>

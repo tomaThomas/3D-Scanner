@@ -1,18 +1,18 @@
-#import picamera
+# import picamera
 import PIL
 from PIL import Image
-import time
+# import time
 import numpy as np
 
 width = 320  # Multiple of 32
 height = 240  # Multiple of 16
 
 # init camera
-#camera = picamera.PiCamera()
-#camera.resolution = (width, height)
-time.sleep(2)
+# camera = picamera.PiCamera()
+# camera.resolution = (width, height)
+# time.sleep(2)
 
-#image = np.empty((height, width, 3), dtype=np.uint8)  # Creates empty 3-dimensional numpy array (rows, columns, color)
+# image = np.empty((height, width, 3), dtype=np.uint8)  # Creates empty 3-dimensional numpy array (rows, columns, color)
 
 
 def get_image():
@@ -21,46 +21,31 @@ def get_image():
     camera.capture(image, 'rgb')  # Fills array with current picture
 
 
+orig_img = PIL.Image.open('testimg.jpg')
+hsv_img = orig_img.convert("HSV")
 
-img = PIL.Image.open('testimg.jpg')
+img = np.array(hsv_img)
+# convert image to floating point for higher precision and range
+img = img.astype(float)
 
-hsvimg = img.convert("HSV")
+# score each pixel in the image (operations are performed on every pixel)
+img += [-237, -70, -255]
+img *= img
+img *= [0.010, 0.005, 0.0008]
+img = img.sum(axis=2)
 
-array = np.array(img)
+# find indices of the best scoring pixel in each line
+max_pix = img.argmin(1)
+
+# convert to displayable image
+img = np.clip(img, 0, 255)
+img = img.astype(np.uint8)
+img = img.reshape((img.shape[0], img.shape[1], 1))
+img = np.repeat(img, 3, axis=2)
+
+# color best pixel per line red
+img[np.arange(len(img)), max_pix] = [255, 0, 0]
 
 
-hsvarray = np.array(hsvimg)
-hsvarray = hsvarray.astype(float)
-
-hsvarray = np.add(hsvarray[:, :], [-237, -70, -255], casting='unsafe')
-hsvarray = np.multiply(hsvarray, hsvarray, casting='unsafe')
-hsvarray = np.multiply(hsvarray[:, :], [0.010, 0.005, 0.0008], casting='unsafe')
-
-hsvarray = hsvarray.sum(axis=2)
-hsvarray = np.clip(hsvarray, 0, 255)
-hsvarray = hsvarray.astype(np.uint8)
-
-
-
-showimg = PIL.Image.fromarray(hsvarray)
+showimg = PIL.Image.fromarray(img)
 showimg.show()
-
-
-# i = array.shape[0]
-# j = array.shape[1]
-# for k in range(0, i):
-#     print("k" + str(k))
-#     for l in range(0, j):
-#         print(l)
-#         h = hsvarray[k][l][0]
-#         s = hsvarray[k][l][1]
-#         v = hsvarray[k][l][2]
-#
-#         hsvarray[k][l][0] = int(((1.4 * (h-237) ** 2) + (0.05 * (s-70) ** 2) + (0.008 * (v - 255) ** 2))*0.5)
-#         if hsvarray[k][l][0] > 255:
-#             hsvarray[k][l][0] = 255
-#         hsvarray[k][l][1] = 0
-#         hsvarray[k][l][2] = 0
-#
-# showimg = PIL.Image.fromarray(hsvarray)
-# showimg.show()

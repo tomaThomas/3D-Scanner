@@ -6,6 +6,7 @@ import asyncio
 import websockets
 import json
 import numpy
+import datetime
 
 running = False
 
@@ -38,6 +39,7 @@ async def msg_receive(socket, _):
 async def scan():
     global running
     running = True
+    exporter.create()
     steps = stepper.steps_per_scan
     for i in range(steps):
         if not running:
@@ -47,7 +49,7 @@ async def scan():
         exporter.add_row(points)
         await stepper.scan_step()
 
-    exporter.export("mesh_name")
+    exporter.export("scan_" + str(datetime.datetime.now()))
     running = False
 
 

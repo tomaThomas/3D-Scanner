@@ -31,7 +31,7 @@ img = img.astype(float)
 # score each pixel in the image (operations are performed on every pixel)
 img += [-237, -70, -255]
 img *= img
-img *= [0.010, 0.005, 0.0008]
+img *= [0.010, 0.005, 0.005]
 img = img.sum(axis=2)
 
 # find indices of the best scoring pixel in each line

@@ -36,11 +36,7 @@
                 }
             }
         };
-
-        window.setInterval(function () {
-            socket.send("{\"img\":0}")
-        }, 1000)
-
+        
         rotate = function () {
             if(socket.readyState === socket.OPEN){
                 setStatus("starting rotation ...")

@@ -21,7 +21,7 @@ def set_threshold(new_threshold):
 def get_image():
     global camera
     img = np.empty((height, width, 3), dtype=np.uint8)
-    camera.capture(img, 'rgb')  # Fills array with current picture
+    camera.capture(img, 'rgb', use_video_port=True)  # Fills array with current picture
 
     matplotlib.colors.rgb_to_hsv(img)
 

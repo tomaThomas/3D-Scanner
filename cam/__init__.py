@@ -3,12 +3,20 @@ import matplotlib
 
 import numpy as np
 
+threshold = 50
+
 width = 1280  # Multiple of 32
 height = 720  # Multiple of 16
 
 # init camera
 camera = picamera.PiCamera()
 camera.resolution = (width, height)
+
+
+def set_threshold(new_threshold):
+    global threshold
+    threshold = new_threshold
+
 
 def get_image():
     global camera
@@ -32,7 +40,7 @@ def get_image():
 
     best_pix = np.stack((np.arange(img.shape[0]), best_pix), axis=1)
 
-    best_pix = np.compress(best_val < 40, best_pix, axis=0)
+    best_pix = np.compress(best_val < threshold, best_pix, axis=0)
 
     return best_pix
 

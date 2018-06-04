@@ -2,7 +2,7 @@ import numpy as np
 
 dZ = 0  # Abstand von der Referenzebene zum Mittelpunkt des Drehtellers
 d0 = 0  # Abstand der Referenzebene zur Stelle auf der Projektionslinie, das in der linksäußersten Pixelspalte der Kamera erscheint
-b = 0  # Abstand von der Laserebene zur Kamera
+b = 1  # Abstand von der Laserebene zur Kamera
 alphaz = np.arctan(dZ / b)  # Winkel zwischen Referenzebene und Drehtellermittelpunkt
 alpha0 = np.arctan(d0 / b)  # Winkel zwischen Referenzebene und linksäußersten Punkt
 f = 3.6  # Brennweite der Kamera (mm)

@@ -7,6 +7,7 @@ import numpy as np
 width = 320  # Multiple of 32
 height = 240  # Multiple of 16
 
+
 # init camera
 # camera = picamera.PiCamera()
 # camera.resolution = (width, height)
@@ -43,7 +44,7 @@ print("Bester Pixelwert:", relative_best)
 
 best_pix = np.stack((np.arange(img.shape[0]), best_pix), axis=1)
 
-best_pix = np.compress(best_val < (40 + 6*relative_best), best_pix, axis=0)
+best_pix = np.compress(best_val < (40 + 6 * relative_best), best_pix, axis=0)
 
 # convert to displayable image
 img = np.clip(img, 0, 255)

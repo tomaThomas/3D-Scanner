@@ -38,4 +38,3 @@ def get_image():
     best_pix = np.compress(best_val < (40 + 6 * relative_best), best_pix, axis=0)
 
     return best_pix
-

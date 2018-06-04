@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 
 firstPin = None
 
+
 def init(startPin):
     global firstPin
     firstPin = startPin
@@ -11,8 +12,10 @@ def init(startPin):
     GPIO.output(firstPin, False)
     GPIO.output(firstPin + 1, False)
 
+
 def set(pin, value):
     GPIO.output(pin + firstPin, value)
+
 
 def cleanup():
     GPIO.cleanup()

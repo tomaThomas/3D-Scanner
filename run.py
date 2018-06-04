@@ -54,13 +54,14 @@ async def scan():
         print("step " + str(i))
         points = await cam.get_points()
 
+        points = await linearalgebra.transform(points, stepper.get_current_angle())
+
         point_json = {'points': []}
         for p in range(len(points)):
             point_json['points'].append({'point': points[p].tolist()})
 
         lastPoints = point_json
 
-        # points = await linearalgebra.transform(points, stepper.get_current_angle())
         # exporter.add_row(points)
         # print(exporter.point_list)
         await stepper.scan_step()

@@ -14,7 +14,7 @@
             pjs = Processing.getInstanceById(getProcessingSketchId());
             pjs.clearPoints();
             for(var point in data.points) {
-                pjs.addPoint(data.points[point].point[0] / 8, data.points[point].point[1] / 6, 0);
+                pjs.addPoint(data.points[point].point[0], data.points[point].point[1], data.points[point].point[2]);
             }
         }
     </script>

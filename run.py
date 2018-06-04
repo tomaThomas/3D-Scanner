@@ -44,6 +44,7 @@ async def msg_receive(socket, _):
 
 async def scan():
     global running
+    global lastPoints
     running = True
     exporter.create()
     steps = stepper.get_steps_per_scan()
@@ -56,6 +57,8 @@ async def scan():
         point_json = {'points': []}
         for p in range(len(points)):
             point_json['points'].append({'point': points[p]})
+
+        lastPoints = point_json
 
         # points = await linearalgebra.transform(points, stepper.get_current_angle())
         # exporter.add_row(points)

@@ -44,10 +44,11 @@ async def msg_receive(socket, _):
 async def scan():
     global running
     exporter.create()
-    steps = stepper.steps_per_scan
+    steps = stepper.get_steps_per_scan()
     for i in range(steps):
         if not running:
             break
+        print("step " + str(i))
         points = await cam.get_points()
 
         point_json = {'points': []}

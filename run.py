@@ -54,9 +54,9 @@ async def scan():
         print("step " + str(i))
         points = await cam.get_points()
 
-        points = await linearalgebra.transform(points, stepper.get_current_angle())
+        points_transformed = await linearalgebra.transform(points, stepper.get_current_angle())
 
-        exporter.add_row(points)
+        exporter.add_row(points_transformed)
 
         print(exporter.point_list)
 

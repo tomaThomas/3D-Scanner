@@ -51,7 +51,7 @@
 
         window.setInterval(function () {
             socket.send("{\"points\":0}");
-        }, 500);
+        }, 1000);
 
         rotate = function () {
             if (socket.readyState === socket.OPEN) {

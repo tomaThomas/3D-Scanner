@@ -17,35 +17,35 @@ distance_cam_center = np.sqrt(dZ * dZ + b * b)  # abstand Mittelpunkt drehteller
 def transform(array, angle):
     res = np.zeros((array.shape[0], 3))
     for index, coordinates in enumerate(array):
-        res[index] = calculateCoordinates(array, angle)
-    return np.array()
+        res[index] = calculateCoordinates(coordinates, angle)
+    return res
 
 
 def calculateCoordinates(pixel_coordinates, angle):
     distance = abstand_projektionsebene(pixel_coordinates[0])
     r = np.abs(dZ - distance)
-    if (angle >= 0 and angle < np.pi / 2 and distance < dZ):
+    if 0 <= angle < np.pi / 2 and distance < dZ:
         x = r * np.sin(angle)
         z = -np.sqrt(r * r - x * x)
-    elif (angle >= 0 and angle < np.pi / 2 and distance > dZ):
+    elif 0 <= angle < np.pi / 2 and distance > dZ:
         x = -r * np.sin(angle)
         z = np.sqrt(r * r - x * x)
-    elif (angle >= np.pi / 2 and angle < np.pi and distance < dZ):
+    elif np.pi / 2 <= angle < np.pi and distance < dZ:
         x = r * np.sin(angle)
         z = np.sqrt(r * r - x * x)
-    elif (angle >= np.pi / 2 and angle < np.pi and distance > dZ):
+    elif np.pi / 2 <= angle < np.pi and distance > dZ:
         x = -r * np.sin(angle)
         z = -np.sqrt(r * r - x * x)
-    elif (angle >= np.pi and angle < 3 / 2 * np.pi and distance < dZ):
+    elif np.pi <= angle < 3 / 2 * np.pi and distance < dZ:
         x = -r * np.sin(angle)
         z = np.sqrt(r * r - x * x)
-    elif (angle >= np.pi and angle < 3 / 2 * np.pi and distance > dZ):
+    elif np.pi <= angle < 3 / 2 * np.pi and distance > dZ:
         x = r * np.sin(angle)
         z = -np.sqrt(r * r - x * x)
-    elif (angle >= 3 / 2 * np.pi and angle < 2 * np.pi and distance < dZ):
+    elif 3 / 2 * np.pi <= angle < 2 * np.pi and distance < dZ:
         x = -r * np.sin(angle)
         z = np.sqrt(r * r - x * x)
-    elif (angle >= 3 / 2 * np.pi and angle < 2 * np.pi and distance > dZ):
+    elif 3 / 2 * np.pi <= angle < 2 * np.pi and distance > dZ:
         x = r * np.sin(angle)
         z = -np.sqrt(r * r - x * x)
     distance_point_cam = np.sqrt(distance * distance + b * b)
@@ -57,7 +57,7 @@ def calculateCoordinates(pixel_coordinates, angle):
 
 # Berechnet den Abstand des gefundenen Punktes zum Linienlaser
 def abstand_projektionsebene(k):
-    if k <= M // 2:
+    if k <= (M // 2):
         phi_k = np.arctan(d * (M - 2 * k) / M * f)
         alphak = alphaz - phi_k
         return b * np.tan(alphak)
@@ -65,3 +65,4 @@ def abstand_projektionsebene(k):
         phi_k = np.arctan(d * (2 * k - M) / M * f)
         alphak = alphaz + phi_k
         return b * np.tan(alphak)
+

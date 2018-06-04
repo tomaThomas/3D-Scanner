@@ -15,7 +15,7 @@ distance_cam_center = np.sqrt(dZ * dZ + b * b)  # abstand Mittelpunkt drehteller
 
 
 def transform(array, angle):
-    res = np.zeros(array.shape[0], 3)
+    res = np.zeros((array.shape[0], 3))
     for index, coordinates in enumerate(array):
         res[index] = calculateCoordinates(array, angle)
     return np.array()

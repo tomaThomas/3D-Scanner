@@ -3,19 +3,12 @@ import matplotlib
 
 import numpy as np
 
-threshold = 50
-
 width = 1280  # Multiple of 32
 height = 720  # Multiple of 16
 
 # init camera
 camera = picamera.PiCamera()
 camera.resolution = (width, height)
-
-
-def set_threshold(new_threshold):
-    global threshold
-    threshold = new_threshold
 
 
 def get_image():
@@ -29,18 +22,20 @@ def get_image():
     img = img.astype(float)
 
     # score each pixel in the image (operations are performed on every pixel)
-    img += [-237, -70, -255]
+    img += [-240, -70, -255]
     img *= img
-    img *= [0.010, 0.005, 0.005]
+    img *= [0.025, 0.005, 0.005]
     img = img.sum(axis=2)
 
     # find indices of the best scoring pixel in each line
     best_pix = img.argmin(1)
     best_val = img[np.arange(img.shape[0]), best_pix]
 
+    relative_best = best_val.min()
+
     best_pix = np.stack((np.arange(img.shape[0]), best_pix), axis=1)
 
-    best_pix = np.compress(best_val < threshold, best_pix, axis=0)
+    best_pix = np.compress(best_val < (40 + 6 * relative_best), best_pix, axis=0)
 
     return best_pix
 

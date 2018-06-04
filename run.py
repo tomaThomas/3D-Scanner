@@ -35,7 +35,7 @@ async def msg_receive(socket, _):
                 for a in range(0, stepper.get_steps_per_scan()):
                     await stepper.scan_step()
             if "points" in msg_parsed:
-                await socket.send(lastPoints)
+                await socket.send(json.dumps(lastPoints))
 
     except websockets.exceptions.ConnectionClosed:
         print("client disconnected")

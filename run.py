@@ -54,7 +54,7 @@ async def scan():
 
         point_json = {'points': []}
         for p in range(len(points)):
-            point_json['points'][i] = {'point': points[p]}
+            point_json['points'].append({'point': points[p]})
 
         points = await linearalgebra.transform(points, stepper.get_current_angle())
         exporter.add_row(points)

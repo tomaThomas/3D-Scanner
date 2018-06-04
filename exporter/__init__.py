@@ -2,7 +2,7 @@ import numpy as np
 import os
 
 path = "web-interface/data/"
-point_list = np.array([])
+point_list = np.array([]).reshape(0, 3)
 
 
 def create():

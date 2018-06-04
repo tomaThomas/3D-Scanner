@@ -12,7 +12,7 @@
     <script type="text/javascript">
         function setPoints(points) {
             pjs = Processing.getInstanceById(getProcessingSketchId());
-            pjs.clearPoints()
+            pjs.clearPoints();
             for(var point in data.points) {
                 pjs.addPoint(point.point[0] / 8, point.point[1] / 6, 0);
             }
@@ -23,7 +23,7 @@
 
         setStatus = function (s) {
             document.getElementById("status").innerHTML = s;
-        }
+        };
 
         window.onload = function (ev) {
             setStatus("not connected");
@@ -32,7 +32,7 @@
             socket.onopen = function (e) {
                 console.log("connection to web socket established");
                 setStatus("connection established");
-            }
+            };
             socket.onmessage = function (e) {
                 console.log("message received: " + e.data);
                 data = JSON.parse(e.data);
@@ -47,11 +47,11 @@
                     setPoints(data)
                 }
             }
-
-            window.setInterval(500, function () {
-                socket.send("{\"points\":0}");
-            })
         };
+
+        window.setInterval(function () {
+            socket.send("{\"points\":0}");
+        }, 500);
 
         rotate = function () {
             if (socket.readyState === socket.OPEN) {
@@ -60,7 +60,7 @@
             } else {
                 setStatus("can't rotate: no connection")
             }
-        }
+        };
 
         start = function () {
             if (socket.readyState === socket.OPEN) {
@@ -69,7 +69,7 @@
             } else {
                 setStatus("can't start: no connection");
             }
-        }
+        };
 
         stop = function () {
             if (socket.readyState === socket.OPEN) {
@@ -78,7 +78,7 @@
             } else {
                 setStatus("can't stop: no connection");
             }
-        }
+        };
     </script>
 </head>
 <body>

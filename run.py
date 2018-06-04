@@ -56,14 +56,16 @@ async def scan():
 
         points = await linearalgebra.transform(points, stepper.get_current_angle())
 
+        exporter.add_row(points)
+
+        print(exporter.point_list)
+
         point_json = {'points': []}
-        for p in range(len(points)):
-            point_json['points'].append({'point': points[p].tolist()})
+        for p in range(len(exporter.point_list)):
+            point_json['points'].append({'point': exporter.point_list[p].tolist()})
 
         lastPoints = point_json
 
-        # exporter.add_row(points)
-        # print(exporter.point_list)
         await stepper.scan_step()
 
     exporter.export("scan_" + str(datetime.datetime.now()))

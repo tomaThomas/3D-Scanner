@@ -25,8 +25,9 @@ async def msg_receive(socket, _):
             if "running" in msg_parsed:
                 await socket.send(json.dumps({"running": running}))
             if "start" in msg_parsed:
-                await scan()
-                running = True
+                if not running:
+                    asyncio.ensure_future(scan())
+                    running = True
                 await socket.send(json.dumps({"running": running}))
             if "stop" in msg_parsed:
                 running = False

@@ -16,7 +16,7 @@ def add_row(array):
     print("Adding row...")
 
     global point_list
-    point_list = np.vstack((point_list, array))
+    point_list = np.append(point_list, array)
     return point_list
 
 

@@ -56,7 +56,7 @@ async def scan():
 
         point_json = {'points': []}
         for p in range(len(points)):
-            point_json['points'].append({'point': points[p]})
+            point_json['points'].append({'point': points[p].tolist()})
 
         lastPoints = point_json
 

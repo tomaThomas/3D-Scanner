@@ -9,7 +9,7 @@ def create():
     print("Creating new object...")
 
     global point_list
-    point_list = np.array([])
+    point_list = np.array([]).reshape(0, 3)
 
 
 def add_row(array):

@@ -1,14 +1,14 @@
 import numpy as np
 
-dZ = 0  # Abstand vom Linienlaser zum Mittelpunkt des Drehtellers
-d0 = 0  # Abstand vom Linienlaser zum Objekt auf der Projektionslinie, das in der linksäußersten Pixelspalte der Kamera erscheint
-b = 0  # Abstand vom Linienlaser zur Kamera
+dZ = 0  # Abstand von der Referenzebene zum Mittelpunkt des Drehtellers
+d0 = 0  # Abstand der Referenzebene zur Stelle auf der Projektionslinie, das in der linksäußersten Pixelspalte der Kamera erscheint
+b = 0  # Abstand von der Laserebene zur Kamera
 alphaz = np.arctan(dZ / b)  # Winkel zwischen Referenzebene und Drehtellermittelpunkt
 alpha0 = np.arctan(d0 / b)  # Winkel zwischen Referenzebene und linksäußersten Punkt
-f = 0  # Brennweite der Kamera
+f = 3.6  # Brennweite der Kamera (mm)
 d = f * np.tan(alphaz - alpha0)  # halber Durchmesser des Sensors
-M = 0  # Anzahl Spalten pro Bild
-N = 0  # Anzahl Zeilen im Bild
+M = 800  # Anzahl Spalten pro Bild
+N = 600  # Anzahl Zeilen im Bild
 c = 0  # Streckungsfaktor
 jZ = 0  # Zeilenindex Mittelpunkt vom Drehteller
 distance_cam_center = np.sqrt(dZ * dZ + b * b)  # abstand Mittelpunkt drehteller zur kamera

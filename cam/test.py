@@ -22,7 +22,7 @@ def get_image():
     camera.capture(image, 'rgb')  # Fills array with current picture
 
 
-orig_img = PIL.Image.open('old_testimg.jpg')
+orig_img = PIL.Image.open('test.jpg')
 hsv_img = orig_img.convert("HSV")
 
 img = np.array(hsv_img)

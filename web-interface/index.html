@@ -13,8 +13,8 @@
         function setPoints(points) {
             pjs = Processing.getInstanceById(getProcessingSketchId());
             pjs.clearPoints()
-            for (i = 0; i < 20; i++) {
-                pjs.addPoint(Math.random() * 200 - 100, Math.random() * 200 - 100, Math.random() * 200 - 100);
+            for(var point in data.points) {
+                pjs.addPoint(point.point[0] / 8, point.point[1] / 6, 0);
             }
         }
     </script>
@@ -43,10 +43,14 @@
                         setStatus("stopped")
                     }
                 }
-                if (data.hasOwnProperty("img")) {
-                    document.getElementById("testimg").src = "data:image/png;base64," + data.img;
+                if(data.hasOwnProperty("points")){
+                    setPoints(data)
                 }
             }
+
+            window.setInterval(500, function () {
+                socket.send("{\"points\":0}");
+            })
         };
 
         rotate = function () {

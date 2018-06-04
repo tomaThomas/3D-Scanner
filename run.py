@@ -5,10 +5,12 @@ import exporter
 import asyncio
 import websockets
 import json
-import numpy
+import cam
 import datetime
 
 running = False
+
+lastPoints = {'points': []}
 
 
 async def msg_receive(socket, _):
@@ -23,7 +25,8 @@ async def msg_receive(socket, _):
             if "running" in msg_parsed:
                 await socket.send(json.dumps({"running": running}))
             if "start" in msg_parsed:
-                scan()
+                await scan()
+                running = True
                 await socket.send(json.dumps({"running": running}))
             if "stop" in msg_parsed:
                 running = False
@@ -31,6 +34,8 @@ async def msg_receive(socket, _):
             if "stepper" in msg_parsed:
                 for a in range(0, stepper.get_steps_per_scan()):
                     await stepper.scan_step()
+            if "points" in msg_parsed:
+                await socket.send(lastPoints)
 
     except websockets.exceptions.ConnectionClosed:
         print("client disconnected")
@@ -38,15 +43,20 @@ async def msg_receive(socket, _):
 
 async def scan():
     global running
-    running = True
     exporter.create()
     steps = stepper.steps_per_scan
     for i in range(steps):
         if not running:
             break
-        points = numpy.zeros((0, 2))  # points = await cam.get_points()
+        points = await cam.get_points()
+
+        point_json = {'points': []}
+        for p in range(len(points)):
+            point_json['points'][i] = {'point': points[p]}
+
         points = await linearalgebra.transform(points, stepper.get_current_angle())
         exporter.add_row(points)
+        print(exporter.point_list)
         await stepper.scan_step()
 
     exporter.export("scan_" + str(datetime.datetime.now()))

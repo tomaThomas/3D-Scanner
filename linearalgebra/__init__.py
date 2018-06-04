@@ -14,7 +14,7 @@ jZ = 500  # Zeilenindex Mittelpunkt vom Drehteller
 distance_cam_center = np.sqrt(dZ * dZ + b * b)  # abstand Mittelpunkt drehteller zur kamera
 
 
-def transform(array, angle):
+async def transform(array, angle):
     res = np.zeros((array.shape[0], 3))
     for index, coordinates in enumerate(array):
         res[index] = calculateCoordinates(coordinates, angle)

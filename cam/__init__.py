@@ -11,7 +11,7 @@ camera = picamera.PiCamera()
 camera.resolution = (width, height)
 
 
-def get_points():
+async def get_points():
     global camera
     img = np.empty((height, width, 3), dtype=np.uint8)
     camera.capture(img, 'rgb', use_video_port=True)  # Fills array with current picture

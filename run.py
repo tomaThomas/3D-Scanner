@@ -10,8 +10,6 @@ import datetime
 
 running = False
 
-lastPoints = {'points': []}
-
 
 async def msg_receive(socket, _):
     print("client connected")
@@ -26,7 +24,7 @@ async def msg_receive(socket, _):
                 await socket.send(json.dumps({"running": running}))
             if "start" in msg_parsed:
                 if not running:
-                    asyncio.ensure_future(scan())
+                    asyncio.ensure_future(scan(socket))
                     running = True
                 await socket.send(json.dumps({"running": running}))
             if "stop" in msg_parsed:
@@ -35,14 +33,12 @@ async def msg_receive(socket, _):
             if "stepper" in msg_parsed:
                 for a in range(0, stepper.get_steps_per_scan()):
                     await stepper.scan_step()
-            if "points" in msg_parsed:
-                await socket.send(json.dumps(lastPoints))
 
     except websockets.exceptions.ConnectionClosed:
         print("client disconnected")
 
 
-async def scan():
+async def scan(socket):
     global running
     global lastPoints
     running = True
@@ -64,7 +60,7 @@ async def scan():
         for p in range(len(exporter.point_list)):
             point_json['points'].append({'point': exporter.point_list[p].tolist()})
 
-        lastPoints = point_json
+        await socket.send(json.dumps(point_json))
 
         await stepper.scan_step()
 

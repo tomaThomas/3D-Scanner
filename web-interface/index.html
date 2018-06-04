@@ -14,7 +14,7 @@
             pjs = Processing.getInstanceById(getProcessingSketchId());
             pjs.clearPoints();
             for(var point in data.points) {
-                pjs.addPoint(data.points[point].point[0], data.points[point].point[1], data.points[point].point[2]);
+                pjs.addPoint(data.points[point].point[0] / 10, data.points[point].point[1] / 10, data.points[point].point[2] / 10);
             }
         }
     </script>
@@ -48,10 +48,6 @@
                 }
             }
         };
-
-        window.setInterval(function () {
-            socket.send("{\"points\":0}");
-        }, 1000);
 
         rotate = function () {
             if (socket.readyState === socket.OPEN) {

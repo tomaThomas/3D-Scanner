@@ -1,48 +1,41 @@
-import cv2
-import base64
-import numpy
+import picamera
+import matplotlib
 
-cap = cv2.VideoCapture(0)
+import numpy as np
 
+width = 1280  # Multiple of 32
+height = 720  # Multiple of 16
 
-def get_list():
-    return numpy.array()
-
-
-def set_width(value):
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, float(value))
+# init camera
+camera = picamera.PiCamera()
+camera.resolution = (width, height)
 
 
-def set_height(value):
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, float(value))
+def get_image():
+    global camera
+    img = np.empty((height, width, 3), dtype=np.uint8)
+    camera.capture(img, 'rgb', use_video_port=True)  # Fills array with current picture
 
+    matplotlib.colors.rgb_to_hsv(img)
 
-def set_brightness(value):
-    cap.set(cv2.CAP_PROP_BRIGHTNESS, float(value))
+    # convert image to floating point for higher precision and range
+    img = img.astype(float)
 
+    # score each pixel in the image (operations are performed on every pixel)
+    img += [-240, -70, -255]
+    img *= img
+    img *= [0.025, 0.005, 0.005]
+    img = img.sum(axis=2)
 
-def set_contrast(value):
-    cap.set(cv2.CAP_PROP_CONTRAST, float(value))
+    # find indices of the best scoring pixel in each line
+    best_pix = img.argmin(1)
+    best_val = img[np.arange(img.shape[0]), best_pix]
 
+    relative_best = best_val.min()
 
-def set_saturation(value):
-    cap.set(cv2.CAP_PROP_SATURATION, float(value))
+    best_pix = np.stack((np.arange(img.shape[0]), best_pix), axis=1)
 
+    best_pix = np.compress(best_val < (40 + 6 * relative_best), best_pix, axis=0)
 
-def capture_image():
-    print('Capturing image')
-    ret, frame = cap.read()
-    return frame
+    return best_pix
 
-
-def save_image(path, img):
-    print('Saving image ' + path)
-    cv2.imwrite(path, img)
-
-
-def image_encode(img):
-    if img is not None:
-        ret, buf = cv2.imencode('.png', img)
-        res = (base64.b64encode(buf).decode('ascii'))
-        return res
-    return ''

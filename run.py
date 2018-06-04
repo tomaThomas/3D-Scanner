@@ -43,6 +43,7 @@ async def msg_receive(socket, _):
 
 async def scan():
     global running
+    running = True
     exporter.create()
     steps = stepper.get_steps_per_scan()
     for i in range(steps):

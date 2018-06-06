@@ -17,43 +17,24 @@ distance_cam_center = np.sqrt(dZ * dZ + b * b)  # abstand Mittelpunkt drehteller
 async def transform(array, angle):
     res = np.zeros((array.shape[0], 3))
     for index, coordinates in enumerate(array):
-        res[index] = calculateCoordinates(coordinates, angle)
+        res[index] = rotate(calculateCoordinates(coordinates),angle)
     return res
 
 
-def calculateCoordinates(pixel_coordinates, angle):
+def calculateCoordinates(pixel_coordinates):
     distance = abstand_projektionsebene(pixel_coordinates[0])
-    r = np.abs(dZ - distance)
-    if 0 <= angle < np.pi / 2 and distance < dZ:
-        x = r * np.sin(angle)
-        z = -np.sqrt(r * r - x * x)
-    elif 0 <= angle < np.pi / 2 and distance > dZ:
-        x = -r * np.sin(angle)
-        z = np.sqrt(r * r - x * x)
-    elif np.pi / 2 <= angle < np.pi and distance < dZ:
-        x = r * np.sin(angle)
-        z = np.sqrt(r * r - x * x)
-    elif np.pi / 2 <= angle < np.pi and distance > dZ:
-        x = -r * np.sin(angle)
-        z = -np.sqrt(r * r - x * x)
-    elif np.pi <= angle < 3 / 2 * np.pi and distance < dZ:
-        x = -r * np.sin(angle)
-        z = np.sqrt(r * r - x * x)
-    elif np.pi <= angle < 3 / 2 * np.pi and distance > dZ:
-        x = r * np.sin(angle)
-        z = -np.sqrt(r * r - x * x)
-    elif 3 / 2 * np.pi <= angle < 2 * np.pi and distance < dZ:
-        x = -r * np.sin(angle)
-        z = np.sqrt(r * r - x * x)
-    elif 3 / 2 * np.pi <= angle < 2 * np.pi and distance > dZ:
-        x = r * np.sin(angle)
-        z = -np.sqrt(r * r - x * x)
+    x = dZ - distance
+    z = 0
     distance_point_cam = np.sqrt(distance * distance + b * b)
-    y = (pixel_coordinates[1] * c) + ((N // 2 * c - (pixel_coordinates[1] * c)) / distance_cam_center) * (
-            distance_cam_center - distance_point_cam)
+    y = (pixel_coordinates[1] * c)
+    '''+ ((N // 2 * c - (pixel_coordinates[1] * c)) / distance_cam_center) * (
+            distance_cam_center - distance_point_cam)'''
     y = y - (N - jZ) * c
-    return np.array([x, y, z])
+    return x, y   #z=0
 
+
+def rotate(coordinates,angle):
+    return np.array([coordinates[0] * np.cos(angle), coordinates[1], -coordinates[0]*np.sin(angle)])
 
 # Berechnet den Abstand des gefundenen Punktes zum Linienlaser
 def abstand_projektionsebene(k):

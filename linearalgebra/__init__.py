@@ -13,6 +13,7 @@ c = 300 / 500  # Streckungsfaktor
 jZ = 500  # Zeilenindex Mittelpunkt vom Drehteller
 distance_cam_center = np.sqrt(dZ * dZ + b * b)  # abstand Mittelpunkt drehteller zur kamera
 
+
 def init(width, height):
     M = width
     N = height
@@ -21,7 +22,7 @@ def init(width, height):
 async def transform(array, angle):
     res = np.zeros((array.shape[0], 3))
     for index, coordinates in enumerate(array):
-        res[index] = rotate(calculate_coordinates(coordinates),angle)
+        res[index] = rotate(calculate_coordinates(coordinates), angle)
     return res
 
 
@@ -34,11 +35,12 @@ def calculate_coordinates(pixel_coordinates):
     '''+ ((N // 2 * c - (pixel_coordinates[1] * c)) / distance_cam_center) * (
             distance_cam_center - distance_point_cam)'''
     y = y - (N - jZ) * c
-    return x, y   #z=0
+    return x, y  # z=0
 
 
-def rotate(coordinates,angle):
-    return np.array([coordinates[0] * np.cos(angle), coordinates[1], -coordinates[0]*np.sin(angle)])
+def rotate(coordinates, angle):
+    return np.array([coordinates[0] * np.cos(angle), coordinates[1], -coordinates[0] * np.sin(angle)])
+
 
 # Berechnet den Abstand des gefundenen Punktes zum Linienlaser
 def abstand_projektionsebene(k):
@@ -50,4 +52,3 @@ def abstand_projektionsebene(k):
         phi_k = np.arctan(d * (2 * k - M) / M * f)
         alphak = alphaz + phi_k
         return b * np.tan(alphak)
-

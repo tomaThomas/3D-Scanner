@@ -4,6 +4,39 @@
     <meta charset="UTF-8">
     <title>3D Scanner Control</title>
     <script src="processing.js" type="text/javascript"></script>
+    <style>
+        .buttons {
+            width: 150px;
+            height: 30px;
+            border:none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color:lightgrey;
+
+        }
+        .buttons:hover {
+            background-color:grey;
+        }
+        input {
+            height:25px;
+            width: 350px;
+        }
+        .start {
+            background-color:lightgreen;
+            color:white;
+        }
+        .start:hover {
+            background-color:green;
+        }
+        .stop {
+            background-color:red;
+            color:white;
+        }
+        .stop:hover {
+            background-color:darkred;
+        }
+
+    </style>
     <script type="text/javascript">
         function getProcessingSketchId() {
             return 'sketch';
@@ -26,12 +59,12 @@
         };
 
         window.onload = function (ev) {
-            setStatus("not connected");
+            setStatus("Not connected");
             console.log("connecting to web socket...");
             socket = new WebSocket("ws://" + window.location.hostname + ":8888");
             socket.onopen = function (e) {
                 console.log("connection to web socket established");
-                setStatus("connection established");
+                setStatus("Connection established");
             };
             socket.onmessage = function (e) {
                 console.log("message received: " + e.data);
@@ -78,8 +111,9 @@
     </script>
 </head>
 <body>
-<h1>3D Scanner Web Interface</h1>
-<div style="float: right; padding-right: 100px;">
+<h1>3D Scanner Web Interface (<span id="status"></span>)</h1>
+<hr style="border:2px solid black">
+<div style="float: right; padding-right: 50px;">
     <canvas id="sketch" data-processing-sources="sketch/sketch.pde"
             width="640" height="360">
         <p>Your browser does not support the canvas tag.</p>
@@ -89,44 +123,49 @@
         <p>JavaScript is required to view the contents of this page.</p>
     </noscript>
 </div>
+<div stlye="display:inline;">
+
+    <button class="buttons start" type="button" onclick="start()">Start Scan</button>
+
+
+
+    <button class="buttons stop"type="button" onclick="stop()">Stop Scan</button>
+
+</div>
 <p>
-    <button type="button" onclick="start()">Start</button>
+    <button class="buttons"type="button" onclick="rotate()">Rotate</button>
 </p>
 <p>
-    <button type="button" onclick="stop()">Stop</button>
-</p>
-<p>
-    <button type="button" onclick="rotate()">Rotate</button>
-</p>
-<p>
-    <button type="button" onclick="setPoints()">Set Points</button>
+    <button class="buttons" type="button" onclick="setPoints()">Set Points</button>
 </p>
 <p><input type="number" id="width">
-    <button type="button" onclick="socket.send(JSON.stringify({'width':document.getElementById('width').value}))">
-        width
+    <button class="buttons" type="button" onclick="socket.send(JSON.stringify({'width':document.getElementById('width').value}))">
+        Change Width
     </button>
 </p>
 <p><input type="number" id="height">
-    <button type="button" onclick="socket.send(JSON.stringify({'height':document.getElementById('height').value}))">
-        height
+    <button class="buttons" type="button" onclick="socket.send(JSON.stringify({'height':document.getElementById('height').value}))">
+        Change Height
     </button>
 </p>
 <p><input type="number" id="brightness">
-    <button type="button"
-            onclick="socket.send(JSON.stringify({'brightness':document.getElementById('brightness').value}))">brightness
+    <button class="buttons" type="button"
+            onclick="socket.send(JSON.stringify({'brightness':document.getElementById('brightness').value}))">
+        Change Brightness
     </button>
 </p>
 <p><input type="number" id="contrast">
-    <button type="button" onclick="socket.send(JSON.stringify({'contrast':document.getElementById('contrast').value}))">
-        contrast
+    <button class="buttons" type="button" onclick="socket.send(JSON.stringify({'contrast':document.getElementById('contrast').value}))">
+        Change Contrast
     </button>
 </p>
 <p><input type="number" id="saturation">
-    <button type="button"
-            onclick="socket.send(JSON.stringify({'saturation':document.getElementById('saturation').value}))">saturation
+    <button class="buttons" type="button"
+            onclick="socket.send(JSON.stringify({'saturation':document.getElementById('saturation').value}))">
+        Change Saturation
     </button>
 </p>
-<p id="status"></p>
+
 <p><a href="pull.php" target="_blank">Pull changes</a></p>
 <p>Last <a href="log.txt">stdout</a> | <a href="error.txt">stderr</a></p>
 <p><img id="testimg" src="" alt="image couldn't be loaded"></p>

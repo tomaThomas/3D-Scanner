@@ -18,7 +18,7 @@ void draw() {
 
 
   stroke(255);
-  strokeWeight(2);
+  strokeWeight(1);
   noFill();
   box(300);
   strokeWeight(5);

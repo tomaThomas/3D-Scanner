@@ -24,7 +24,7 @@
         .start {
             background-color:lightgreen;
             color:white;
-            width:45%;
+            width:100%;
             height:50px;
             font-size: 20px;
         }
@@ -34,7 +34,7 @@
         .stop {
             background-color:red;
             color:white;
-            width:45%;
+            width:100%;
             height:50px;
             font-size: 20px;
         }
@@ -48,7 +48,7 @@
             padding-left:20px;
         }
         .StartStop {
-            width:685px;
+
         }
         .logo {
             height:70px;
@@ -140,64 +140,27 @@
 <body>
 <span style="position:relative;"></span><h1>3D Scanner Web Interface (<span id="status"></span>)<img class="logo" src="logo.png" alt="logo" /></h1>
 <hr style="border:2px solid black">
-<div style="float: right; padding-right: 50px;">
-    <canvas id="sketch" data-processing-sources="sketch/sketch.pde"
-            width="500" height="300">
-        <p>Your browser does not support the canvas tag.</p>
-        <!-- Note: you can put any alternative content here. -->
-    </canvas>
-    <noscript>
-        <p>JavaScript is required to view the contents of this page.</p>
-    </noscript>
+<div style="display:inline; width:100vw;">
+    <div style="padding-right: 50px; width:1000px;">
+        <canvas id="sketch" data-processing-sources="sketch/sketch.pde"
+                width="1000" height="500">
+            <p>Your browser does not support the canvas tag.</p>
+            <!-- Note: you can put any alternative content here. -->
+        </canvas>
+        <noscript>
+            <p>JavaScript is required to view the contents of this page.</p>
+        </noscript>
+    </div>
+    <div style="display:block; width:20%;" class="StartStop">
+
+        <button class="buttons start" type="button" onclick="start()">Start Scan</button>
+
+
+
+        <button class="buttons stop"type="button" onclick="stop()">Stop Scan</button>
+
+    </div>
 </div>
-<div stlye="display:inline;" class="StartStop">
-
-    <button class="buttons start" type="button" onclick="start()">Start Scan</button>
-
-
-
-    <button class="buttons stop"type="button" onclick="stop()">Stop Scan</button>
-
-</div>
-<p>
-    <button class="buttons"type="button" onclick="rotate()">Rotate</button>
-</p>
-<p>
-    <button class="buttons" type="button" onclick="setPoints()">Set Points</button>
-</p>
-<div class="changes">
-    <p><input type="number" id="width">
-        <button class="buttons" type="button" onclick="socket.send(JSON.stringify({'width':document.getElementById('width').value}))">
-            Change Width
-        </button>
-    </p>
-    <p><input type="number" id="height">
-        <button class="buttons" type="button" onclick="socket.send(JSON.stringify({'height':document.getElementById('height').value}))">
-            Change Height
-        </button>
-    </p>
-    <p><input type="number" id="brightness">
-        <button class="buttons" type="button"
-                onclick="socket.send(JSON.stringify({'brightness':document.getElementById('brightness').value}))">
-            Change Brightness
-        </button>
-    </p>
-    <p><input type="number" id="contrast">
-        <button class="buttons" type="button" onclick="socket.send(JSON.stringify({'contrast':document.getElementById('contrast').value}))">
-            Change Contrast
-        </button>
-    </p>
-    <p><input type="number" id="saturation">
-        <button class="buttons" type="button"
-                onclick="socket.send(JSON.stringify({'saturation':document.getElementById('saturation').value}))">
-            Change Saturation
-        </button>
-    </p>
-</div>
-
-<p><a href="pull.php" target="_blank">Pull changes</a></p>
-<p>Last <a href="log.txt">stdout</a> | <a href="error.txt">stderr</a></p>
-<p><img id="testimg" src="" alt="image couldn't be loaded"></p>
 
 </body>
 </html>

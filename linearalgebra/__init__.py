@@ -31,9 +31,8 @@ def calculate_coordinates(pixel_coordinates):
     x = dZ - distance
     z = 0
     distance_point_cam = np.sqrt(distance * distance + b * b)
-    y = (pixel_coordinates[1] * c)
-    '''+ ((N // 2 * c - (pixel_coordinates[1] * c)) / distance_cam_center) * (
-            distance_cam_center - distance_point_cam)'''
+    y = (pixel_coordinates[1] * c) + ((N // 2 * c - (pixel_coordinates[1] * c)) / distance_cam_center) * (
+            distance_cam_center - distance_point_cam)
     y = y - (N - jZ) * c
     return x, y  # z=0
 

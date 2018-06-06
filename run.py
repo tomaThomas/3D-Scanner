@@ -13,23 +13,21 @@ running = False
 
 async def msg_receive(socket, _):
     print("client connected")
-    global running
     try:
-        await socket.send(json.dumps({"running": running}))
+        await socket.send(json.dumps({"status": ""}))
         while True:
             msg = await socket.recv()
             print("message received: {}".format(msg))
             msg_parsed = json.loads(msg)
             if "running" in msg_parsed:
-                await socket.send(json.dumps({"running": running}))
+                await socket.send(json.dumps({"status": ""}))
             if "start" in msg_parsed:
                 if not running:
                     asyncio.ensure_future(scan(socket))
-                    running = True
-                await socket.send(json.dumps({"running": running}))
+                await socket.send(json.dumps({"status": "Scan started"}))
             if "stop" in msg_parsed:
                 running = False
-                await socket.send(json.dumps({"running": running}))
+                await socket.send(json.dumps({"status": "Scan stopped"}))
             if "stepper" in msg_parsed:
                 for a in range(0, stepper.get_steps_per_scan()):
                     await stepper.scan_step()
@@ -48,6 +46,8 @@ async def scan(socket):
         if not running:
             break
         print("step " + str(i))
+        progress_json = {'progress': (i/steps)*100*0.8}
+        await socket.send(json.dumps(progress_json))
         points = await cam.get_points()
 
         points_transformed = await linearalgebra.transform(points, stepper.get_current_angle())
@@ -69,6 +69,8 @@ async def scan(socket):
         await stepper.scan_step()
 
     name = "scan_" + str(datetime.datetime.now())
+    url = {"url" : name}
+    await socket.send(json.dumps(url))
     exporter.export(name)
     running = False
 

@@ -17,7 +17,7 @@ void draw() {
   strokeWeight(1);
   noFill();
   box(300);
-  strokeWeight(5);
+  strokeWeight(2);
   for(Point p: points){
     p.draw();
   }

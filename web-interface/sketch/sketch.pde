@@ -1,12 +1,8 @@
 ArrayList<Point> points;
 
 void setup() {
-  size(800, 600, P3D);
+  size(1000, 600, P3D);
   points = new ArrayList<Point>();
-  addPoint(0, 0, 0);
-  addPoint(10, 112, 42);
-  addPoint(23, 62, 32);
-  addPoint(34, 84, 45);
 }
 
 void draw() {

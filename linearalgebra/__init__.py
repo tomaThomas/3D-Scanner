@@ -7,11 +7,16 @@ alphaz = np.arctan(dZ / b)  # Winkel zwischen Referenzebene und Drehtellermittel
 alpha0 = np.arctan(d0 / b)  # Winkel zwischen Referenzebene und linksäußersten Punkt
 f = 3.6  # Brennweite der Kamera (mm)
 d = f * np.tan(alphaz - alpha0)  # halber Durchmesser des Sensors
-M = 800  # Anzahl Spalten pro Bild
-N = 600  # Anzahl Zeilen im Bild
+M = 1024  # Anzahl Spalten pro Bild (wird durch init neu gesetzt)
+N = 720  # Anzahl Zeilen im Bild (wird durch init neu gesetzt)
 c = 300 / 500  # Streckungsfaktor
 jZ = 500  # Zeilenindex Mittelpunkt vom Drehteller
 distance_cam_center = np.sqrt(dZ * dZ + b * b)  # abstand Mittelpunkt drehteller zur kamera
+
+
+def init(width, height):
+    M = width
+    N = height
 
 
 async def transform(array, angle):

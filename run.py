@@ -64,12 +64,15 @@ async def scan(socket):
 
         await stepper.scan_step()
 
-    exporter.export("scan_" + str(datetime.datetime.now()))
+    name = "scan_" + str(datetime.datetime.now())
+    exporter.export(name)
     running = False
 
 
 def main():
     print("starting event loop")
+
+    linearalgebra.init(cam.width, cam.height)
 
     loop = asyncio.get_event_loop()
 

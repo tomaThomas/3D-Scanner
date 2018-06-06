@@ -10,7 +10,6 @@ height = 720  # Multiple of 16
 camera = picamera.PiCamera()
 camera.resolution = (width, height)
 
-
 async def get_points():
     global camera
     img = np.empty((height, width, 3), dtype=np.uint8)

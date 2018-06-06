@@ -12,7 +12,7 @@ void setup() {
 void draw() {
   background(50);
   camera(0, 0, 0, 0, 0, -1, 0, 1, 0);
-  translate(0, 0, -400);
+  translate(0, 0, -450);
   rotateX((((float)height / 2) - (float)mouseY)/(float)height);
   rotateY((float)mouseX/(float)width*4);
 
@@ -20,7 +20,7 @@ void draw() {
   stroke(255);
   strokeWeight(2);
   noFill();
-  box(200);
+  box(300);
   strokeWeight(5);
   for(Point p: points){
     p.draw();

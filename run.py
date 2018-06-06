@@ -55,9 +55,6 @@ async def scan(socket):
 
         exporter.add_row(points_transformed)
 
-        print(exporter.point_list)
-
-
         #point_json = {'points': []}
         #for p in range(len(points)):
         #    point_json['points'].append({'point': points[p].tolist()})

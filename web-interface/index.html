@@ -35,6 +35,13 @@
         .stop:hover {
             background-color:darkred;
         }
+        .changes {
+            border: 2px solid grey;
+            margin:0;
+            width: 600px;
+            padding-left:20px;
+            margin-left:-20px;
+        }
 
     </style>
     <script type="text/javascript">
@@ -138,33 +145,35 @@
 <p>
     <button class="buttons" type="button" onclick="setPoints()">Set Points</button>
 </p>
-<p><input type="number" id="width">
-    <button class="buttons" type="button" onclick="socket.send(JSON.stringify({'width':document.getElementById('width').value}))">
-        Change Width
-    </button>
-</p>
-<p><input type="number" id="height">
-    <button class="buttons" type="button" onclick="socket.send(JSON.stringify({'height':document.getElementById('height').value}))">
-        Change Height
-    </button>
-</p>
-<p><input type="number" id="brightness">
-    <button class="buttons" type="button"
-            onclick="socket.send(JSON.stringify({'brightness':document.getElementById('brightness').value}))">
-        Change Brightness
-    </button>
-</p>
-<p><input type="number" id="contrast">
-    <button class="buttons" type="button" onclick="socket.send(JSON.stringify({'contrast':document.getElementById('contrast').value}))">
-        Change Contrast
-    </button>
-</p>
-<p><input type="number" id="saturation">
-    <button class="buttons" type="button"
-            onclick="socket.send(JSON.stringify({'saturation':document.getElementById('saturation').value}))">
-        Change Saturation
-    </button>
-</p>
+<div class="changes">
+    <p><input type="number" id="width">
+        <button class="buttons" type="button" onclick="socket.send(JSON.stringify({'width':document.getElementById('width').value}))">
+            Change Width
+        </button>
+    </p>
+    <p><input type="number" id="height">
+        <button class="buttons" type="button" onclick="socket.send(JSON.stringify({'height':document.getElementById('height').value}))">
+            Change Height
+        </button>
+    </p>
+    <p><input type="number" id="brightness">
+        <button class="buttons" type="button"
+                onclick="socket.send(JSON.stringify({'brightness':document.getElementById('brightness').value}))">
+            Change Brightness
+        </button>
+    </p>
+    <p><input type="number" id="contrast">
+        <button class="buttons" type="button" onclick="socket.send(JSON.stringify({'contrast':document.getElementById('contrast').value}))">
+            Change Contrast
+        </button>
+    </p>
+    <p><input type="number" id="saturation">
+        <button class="buttons" type="button"
+                onclick="socket.send(JSON.stringify({'saturation':document.getElementById('saturation').value}))">
+            Change Saturation
+        </button>
+    </p>
+</div>
 
 <p><a href="pull.php" target="_blank">Pull changes</a></p>
 <p>Last <a href="log.txt">stdout</a> | <a href="error.txt">stderr</a></p>

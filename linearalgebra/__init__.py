@@ -13,7 +13,6 @@ c = 300 / 500  # Streckungsfaktor
 jZ = 500  # Zeilenindex Mittelpunkt vom Drehteller
 distance_cam_center = np.sqrt(dZ * dZ + b * b)  # abstand Mittelpunkt drehteller zur kamera
 
-
 def init(width, height):
     M = width
     N = height
@@ -22,11 +21,11 @@ def init(width, height):
 async def transform(array, angle):
     res = np.zeros((array.shape[0], 3))
     for index, coordinates in enumerate(array):
-        res[index] = rotate(calculateCoordinates(coordinates),angle)
+        res[index] = rotate(calculate_coordinates(coordinates),angle)
     return res
 
 
-def calculateCoordinates(pixel_coordinates):
+def calculate_coordinates(pixel_coordinates):
     distance = abstand_projektionsebene(pixel_coordinates[0])
     x = dZ - distance
     z = 0

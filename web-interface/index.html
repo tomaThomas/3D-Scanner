@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>3D Scanner Control</title>
     <script src="processing.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .buttons {
             width: 150px;
             height: 30px;
             border:none;
             border-radius: 4px;
+            margin-bottom: 20px;
             cursor: pointer;
             background-color:lightgrey;
 
@@ -24,31 +26,35 @@
         .start {
             background-color:lightgreen;
             color:white;
-            width:100%;
+            width:50%;
             height:50px;
             font-size: 20px;
         }
         .start:hover {
             background-color:green;
         }
+        .download {
+            margin-top:30px;
+            height:40px;
+            font-size:30px;
+            background-color:lightgrey;
+            border: 1px solid black;
+            padding: 5px;
+            text-align:center;
+            cursor:pointer;
+        }
+        i {
+            vertical-align: middle;
+        }
         .stop {
             background-color:red;
             color:white;
-            width:100%;
+            width:50%;
             height:50px;
             font-size: 20px;
         }
         .stop:hover {
             background-color:darkred;
-        }
-        .changes {
-            border: 2px solid grey;
-            margin:0;
-            width: 600px;
-            padding-left:20px;
-        }
-        .StartStop {
-
         }
         .logo {
             height:70px;
@@ -59,8 +65,21 @@
             top:0;
 
         }
-        h1 {
+        .progressLabel {
+            font-size:30px;
+            text-align: center;
 
+        }
+        .progressBarOut {
+            border: 1px solid grey;
+            margin-top:20px;
+            height: 40px;
+        }
+        .progressBarIn {
+            background-color: lightgreen;
+            color:white;
+            height:40px;
+            width:0;
         }
 
     </style>
@@ -84,6 +103,10 @@
         setStatus = function (s) {
             document.getElementById("status").innerHTML = s;
         };
+        setProgress = function (p) {
+            document.getElementById("progressBar").style.width = p + "%";
+            document.getElementById("progressBar").innerHTML = p + "%";
+        }
 
         window.onload = function (ev) {
             setStatus("Not connected");
@@ -96,15 +119,17 @@
             socket.onmessage = function (e) {
                 console.log("message received: " + e.data);
                 data = JSON.parse(e.data);
-                if (data.hasOwnProperty("running")) {
-                    if (data.running === true) {
-                        setStatus("started")
-                    } else {
-                        setStatus("stopped")
-                    }
+                if (data.hasOwnProperty("status")) {
+                        setStatus(data['running'])
                 }
                 if(data.hasOwnProperty("points")){
                     setPoints(data)
+                }
+                if(data.hasOwnProperty("progress")) {
+                    setProgress(data['progress'])
+                }
+                if(data.hasOwnProperty("url")) {
+                    document.getElementById("download").setAttribute("href", data["url"]);
                 }
             }
         };
@@ -140,10 +165,10 @@
 <body>
 <span style="position:relative;"></span><h1>3D Scanner Web Interface (<span id="status"></span>)<img class="logo" src="logo.png" alt="logo" /></h1>
 <hr style="border:2px solid black">
-<div style="display:inline; width:100vw;">
-    <div style="padding-right: 50px; width:1000px;">
+<div style="display:inline; width:100vw; overflow:hidden;">
+    <div style="padding-right: 50px; width:1000px; float:left;">
         <canvas id="sketch" data-processing-sources="sketch/sketch.pde"
-                width="1000" height="500">
+                width="50vw" height="600">
             <p>Your browser does not support the canvas tag.</p>
             <!-- Note: you can put any alternative content here. -->
         </canvas>
@@ -151,14 +176,18 @@
             <p>JavaScript is required to view the contents of this page.</p>
         </noscript>
     </div>
-    <div style="display:block; width:20%;" class="StartStop">
+    <div style="width:40%; overflow:hidden;" class="StartStop">
 
         <button class="buttons start" type="button" onclick="start()">Start Scan</button>
-
-
-
         <button class="buttons stop"type="button" onclick="stop()">Stop Scan</button>
-
+        <p style="text-align:center;"><label class="progressLabel">Scan Progress</label></p>
+        <hr style="border:2px solid black;">
+        <div class="progressBarOut">
+            <div id="progressBar" class="progressBarIn"></div>
+        </div>
+        <div class="download">
+            <i class="fa fa-download"></i><a style="text-decoration:none;" id="download" download> Download 3D-Modell</a>
+        </div>
     </div>
 </div>
 

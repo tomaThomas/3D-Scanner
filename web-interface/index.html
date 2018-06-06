@@ -24,6 +24,9 @@
         .start {
             background-color:lightgreen;
             color:white;
+            width:45%;
+            height:50px;
+            font-size: 20px;
         }
         .start:hover {
             background-color:green;
@@ -31,6 +34,9 @@
         .stop {
             background-color:red;
             color:white;
+            width:45%;
+            height:50px;
+            font-size: 20px;
         }
         .stop:hover {
             background-color:darkred;
@@ -40,7 +46,21 @@
             margin:0;
             width: 600px;
             padding-left:20px;
-            margin-left:-20px;
+        }
+        .StartStop {
+            width:685px;
+        }
+        .logo {
+            height:70px;
+            width:100px;
+            vertical-align: middle;
+            position:absolute;
+            right:20px;
+            top:0;
+
+        }
+        h1 {
+
         }
 
     </style>
@@ -118,11 +138,11 @@
     </script>
 </head>
 <body>
-<h1>3D Scanner Web Interface (<span id="status"></span>)</h1>
+<span style="position:relative;"></span><h1>3D Scanner Web Interface (<span id="status"></span>)<img class="logo" src="logo.png" alt="logo" /></h1>
 <hr style="border:2px solid black">
 <div style="float: right; padding-right: 50px;">
     <canvas id="sketch" data-processing-sources="sketch/sketch.pde"
-            width="640" height="360">
+            width="500" height="300">
         <p>Your browser does not support the canvas tag.</p>
         <!-- Note: you can put any alternative content here. -->
     </canvas>
@@ -130,7 +150,7 @@
         <p>JavaScript is required to view the contents of this page.</p>
     </noscript>
 </div>
-<div stlye="display:inline;">
+<div stlye="display:inline;" class="StartStop">
 
     <button class="buttons start" type="button" onclick="start()">Start Scan</button>
 

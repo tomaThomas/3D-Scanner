@@ -27,7 +27,7 @@ async def transform(array, angle):
 
 
 def calculate_coordinates(pixel_coordinates):
-    distance = abstand_projektionsebene(pixel_coordinates[0])
+    distance = abstand_projektionsebene(M - pixel_coordinates[0])
     x = dZ - distance
     z = 0
     distance_point_cam = np.sqrt(distance * distance + b * b)

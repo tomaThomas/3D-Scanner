@@ -94,7 +94,7 @@
     <script type="text/javascript">
         function addPoints(points) {
             pjs = Processing.getInstanceById(getProcessingSketchId());
-            pjs.clearPoints();
+            //pjs.clearPoints();
             for(var point in data.points) {
                 pjs.addPoint(data.points[point].point[0], data.points[point].point[1], data.points[point].point[2]);
             }

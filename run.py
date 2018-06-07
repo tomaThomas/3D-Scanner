@@ -12,6 +12,7 @@ running = False
 
 
 async def msg_receive(socket, _):
+    global running
     print("client connected")
     try:
         await socket.send(json.dumps({"status": ""}))

@@ -22,7 +22,7 @@ def get_image():
     camera.capture(image, 'rgb')  # Fills array with current picture
 
 
-orig_img = PIL.Image.open('test.jpg')
+orig_img = PIL.Image.open('testimg.jpg')
 hsv_img = orig_img.convert("HSV")
 
 img = np.array(hsv_img)
@@ -32,7 +32,7 @@ img = img.astype(float)
 # score each pixel in the image (operations are performed on every pixel)
 img += [-240, -70, -255]
 img *= img
-img *= [0.025, 0.005, 0.005]
+img *= [0.025, 0.005, 0.01]
 img = img.sum(axis=2)
 
 # find indices of the best scoring pixel in each line
@@ -40,11 +40,12 @@ best_pix = img.argmin(1)
 best_val = img[np.arange(img.shape[0]), best_pix]
 
 relative_best = best_val.min()
-print("Bester Pixelwert:", relative_best)
+relative = np.average(best_val)
+print("Durchschnitt:", relative)
 
 best_pix = np.stack((np.arange(img.shape[0]), best_pix), axis=1)
 
-best_pix = np.compress(best_val < (40 + 6 * relative_best), best_pix, axis=0)
+best_pix = np.compress(best_val < (40 + 1 * relative), best_pix, axis=0)
 
 # convert to displayable image
 img = np.clip(img, 0, 255)

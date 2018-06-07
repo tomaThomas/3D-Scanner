@@ -3,8 +3,8 @@ import matplotlib
 
 import numpy as np
 
-width = 1280  # Multiple of 32
-height = 720  # Multiple of 16
+width = 640  # Multiple of 32
+height = 480  # Multiple of 16
 
 # init camera
 camera = picamera.PiCamera()

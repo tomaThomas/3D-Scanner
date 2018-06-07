@@ -30,25 +30,28 @@ img = np.array(hsv_img)
 img = img.astype(float)
 
 # score each pixel in the image (operations are performed on every pixel)
-img += [-240, -70, -255]
+img += [-237, -70, -255]
 img *= img
-img *= [0.025, 0.005, 0.01]
+img *= [0.04, 0.00, 0.008]
 img = img.sum(axis=2)
 
 # find indices of the best scoring pixel in each line
 best_pix = img.argmin(1)
 best_val = img[np.arange(img.shape[0]), best_pix]
 
-relative_best = best_val.min()
-relative = np.average(best_val)
-print("Durchschnitt:", relative)
+best_value_single = best_val.min()
+bestval_avg = np.average(best_val)
+avg = np.average(img)
+print("Durchschnitt Linie:", bestval_avg)
+print("Durchschnitt gesamt:", avg)
+print("best:", best_value_single)
 
 best_pix = np.stack((np.arange(img.shape[0]), best_pix), axis=1)
 
-best_pix = np.compress(best_val < (40 + 1 * relative), best_pix, axis=0)
+best_pix = np.compress(best_val < (avg * 0.1 + bestval_avg * 0.4), best_pix, axis=0)
 
 # convert to displayable image
-img = np.clip(img, 0, 255)
+img = np.clip(img, 0, 0)
 img = img.astype(np.uint8)
 
 # make rgb from greyscale (to enable coloring)

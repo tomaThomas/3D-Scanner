@@ -21,9 +21,9 @@ async def get_points():
     img = img.astype(float)
 
     # score each pixel in the image (operations are performed on every pixel)
-    img += [-240, -70, -255]
+    img += [-237, -70, -255]
     img *= img
-    img *= [0.025, 0.005, 0.01]
+    img *= [0.04, 0.00, 0.008]
     img = img.sum(axis=2)
 
 
@@ -31,10 +31,13 @@ async def get_points():
     best_pix = img.argmin(1)
     best_val = img[np.arange(img.shape[0]), best_pix]
 
-    relative = np.average(best_val)
+
+    bestval_avg = np.average(best_val)
+    avg = np.average(img)
 
     best_pix = np.stack((best_pix, np.arange(img.shape[0])), axis=1)
 
-    best_pix = np.compress(best_val < (40 + 1 * relative), best_pix, axis=0)
+    best_pix = np.compress(best_val < (avg * 0.1 + bestval_avg * 0.4), best_pix, axis=0)
+
 
     return best_pix

@@ -80,6 +80,9 @@
             color:white;
             height:40px;
             width:0;
+            text-align:center;
+            color:black;
+            line-height:40px;
         }
 
     </style>
@@ -91,6 +94,7 @@
     <script type="text/javascript">
         function addPoints(points) {
             pjs = Processing.getInstanceById(getProcessingSketchId());
+            pjs.clearPoints();
             for(var point in data.points) {
                 pjs.addPoint(data.points[point].point[0], data.points[point].point[1], data.points[point].point[2]);
             }
@@ -104,7 +108,7 @@
         };
         setProgress = function (p) {
             document.getElementById("progressBar").style.width = p + "%";
-            document.getElementById("progressBar").innerHTML = p + "%";
+            document.getElementById("progressBar").innerHTML = p.toFixed(2) + "%";
         }
 
         window.onload = function (ev) {

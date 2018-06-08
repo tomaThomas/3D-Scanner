@@ -132,7 +132,7 @@
                     setProgress(data['progress'])
                 }
                 if(data.hasOwnProperty("url")) {
-                    document.getElementById("download").setAttribute("href", data["url"]);
+                    document.getElementById("download").setAttribute("href", "data/" + data["url"] + "_pc.obj");
                 }
             }
         };

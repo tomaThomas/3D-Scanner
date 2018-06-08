@@ -15,13 +15,13 @@ async def msg_receive(socket, _):
     global running
     print("client connected")
     try:
-        await socket.send(json.dumps({"status": ""}))
+        await socket.send(json.dumps({"status": "Connection established"}))
         while True:
             msg = await socket.recv()
             print("message received: {}".format(msg))
             msg_parsed = json.loads(msg)
             if "running" in msg_parsed:
-                await socket.send(json.dumps({"status": ""}))
+                await socket.send(json.dumps({"status": "Connection established"}))
             if "start" in msg_parsed:
                 if not running:
                     asyncio.ensure_future(scan(socket))
@@ -47,7 +47,7 @@ async def scan(socket):
         if not running:
             break
         print("step " + str(i))
-        progress_json = {'progress': (i/steps)*100*0.8}
+        progress_json = {'progress': (i/steps)*100}
         await socket.send(json.dumps(progress_json))
         points = await cam.get_points()
 

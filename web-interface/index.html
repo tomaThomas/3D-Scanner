@@ -74,15 +74,16 @@
             border: 1px solid grey;
             margin-top:20px;
             height: 40px;
+            text-align:center;
+            color:black;
+            line-height:40px;
         }
         .progressBarIn {
             background-color: lightgreen;
             color:white;
             height:40px;
             width:0;
-            text-align:center;
-            color:black;
-            line-height:40px;
+
         }
 
     </style>
@@ -108,7 +109,7 @@
         };
         setProgress = function (p) {
             document.getElementById("progressBar").style.width = p + "%";
-            document.getElementById("progressBar").innerHTML = p.toFixed(2) + "%";
+            document.getElementById("progressBarOut").innerHTML = p.toFixed(2) + "%";
         }
 
         window.onload = function (ev) {
@@ -132,7 +133,8 @@
                     setProgress(data['progress'])
                 }
                 if(data.hasOwnProperty("url")) {
-                    document.getElementById("download").setAttribute("href", "data/" + data["url"] + "_pc.obj");
+                    document.getElementById("downloadPoints").setAttribute("href", "data/" + data["url"] + "_pc.obj");
+                    document.getElementById("downloadPolygon").setAttribute("href", "data/" + data["url"] + "_mesh.obj");
                 }
             }
         };
@@ -188,11 +190,14 @@
         <button class="buttons stop"type="button" onclick="stop()">Stop Scan</button>
         <p style="text-align:center;"><label class="progressLabel">Scan Progress</label></p>
         <hr style="border:2px solid black;">
-        <div class="progressBarOut">
+        <div class="progressBarOut" id="progressBarOut">0%
             <div id="progressBar" class="progressBarIn"></div>
         </div>
         <div class="download">
-            <i class="fa fa-download"></i><a style="text-decoration:none;" id="download" download> Download 3D-Modell</a>
+            <i class="fa fa-download"></i><a style="text-decoration:none;" id="downloadPoints" download> Download 3D-Points</a>
+        </div>
+        <div class="download">
+            <i class="fa fa-download"></i><a style="text-decoration:none;" id="downloadPolygon" download> Download 3D-Modell</a>
         </div>
     </div>
 </div>

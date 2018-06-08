@@ -7,10 +7,10 @@ void setup() {
 
 void draw() {
   background(50);
-  camera(0, 0, 0, 0, 0, -1, 0, 1, 0);
+  camera(0, 0, 0, 0, 0, -1, 0, -1, 0);
   translate(0, 0, -450);
   rotateX((((float)height / 2) - (float)mouseY)/(float)height);
-  rotateY((float)mouseX/(float)width*4);
+  rotateY((float)mouseX/(float)width*8);
 
 
   stroke(255);

@@ -51,7 +51,7 @@ async def scan(socket):
         await socket.send(json.dumps(progress_json))
         points = await cam.get_points()
 
-        points_transformed = await linearalgebra.transform(points, stepper.get_current_angle())
+        points_transformed =  linearalgebra.transform(points, stepper.get_current_angle())
 
         exporter.add_row(points_transformed)
 
@@ -70,7 +70,7 @@ async def scan(socket):
 
         await stepper.scan_step()
 
-    name = "scan_" + str(datetime.datetime.now())
+    name = "scan_" + str(datetime.datetime.now()).replace(" ", "_")
     url = {"url" : name}
     await socket.send(json.dumps(url))
     exporter.export(name)

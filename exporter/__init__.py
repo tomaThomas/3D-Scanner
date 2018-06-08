@@ -15,6 +15,9 @@ def create():
 def add_row(array):
     print("Adding row...")
 
+    point_count = array.shape[0];
+    array = np.reshape(array, (point_count, 3))
+
     global point_list
     point_list = np.append(point_list, array, axis=0)
     return point_list

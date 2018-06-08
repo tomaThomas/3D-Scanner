@@ -70,7 +70,7 @@ async def scan(socket):
 
         await stepper.scan_step()
 
-    name = "scan_" + str(datetime.datetime.now())
+    name = "scan_" + str(datetime.datetime.now()).replace(" ", "_")
     url = {"url" : name}
     await socket.send(json.dumps(url))
     exporter.export(name)

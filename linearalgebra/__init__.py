@@ -24,7 +24,7 @@ def transform(array, angle):
     for coordinates in array:
         distance = abstand_projektionsebene(M - coordinates[0])
         if np.abs(dZ - distance) <= 150:   #Punkte außerhalb des Drehtellers werden ignoriert
-            res.append(rotate(calculate_coordinates(distance,N - coordinates[1]), angle))
+            res.append(rotate(calculate_coordinates(distance, coordinates[1]), angle))
     return np.array(res)
 
 def calculate_coordinates(distance, y_pixel):
@@ -50,4 +50,4 @@ def abstand_projektionsebene(k):
         return b * np.tan(alphak)
 
 
-print(transform(np.array([[M/2,jZ-100]]),0))
+

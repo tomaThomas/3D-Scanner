@@ -9,7 +9,7 @@ f = 3.6  # Brennweite der Kamera (mm)
 d = f * np.tan(alphaz - alpha0)  # halber Durchmesser des Sensors
 M = 640  # Anzahl Spalten pro Bild (wird durch init neu gesetzt)
 N = 480  # Anzahl Zeilen im Bild (wird durch init neu gesetzt)
-c = 12.3448  # Streckungsfaktor
+c = 1.23448  # Streckungsfaktor
 jZ = 412  # Zeilenindex Mittelpunkt vom Drehteller
 distance_cam_center = np.sqrt(dZ * dZ + b * b)  # abstand Mittelpunkt drehteller zur kamera
 

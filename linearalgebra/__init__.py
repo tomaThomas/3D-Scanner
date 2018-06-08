@@ -24,10 +24,10 @@ async def transform(array, angle):
     for coordinates in array:
         distance = abstand_projektionsebene(M - coordinates[0])
         if np.abs(dZ - distance) <= 150:   #Punkte außerhalb des Drehtellers werden ignoriert
-            res.append(rotate(calculate_coordinates(distance,N - coordinates[1])))
+            res.append(rotate(calculate_coordinates(distance,N - coordinates[1]), angle))
     return np.array(res)
 
-def calculate_coordinates(distance, y_pixel, angle):
+def calculate_coordinates(distance, y_pixel):
     x = dZ - distance
     distance_point_cam = np.sqrt(distance * distance + b * b)
     y = (y_pixel * c) + ((N // 2 * c - (y_pixel * c)) / distance_cam_center) * (distance_cam_center - distance_point_cam)

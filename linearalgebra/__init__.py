@@ -30,7 +30,7 @@ async def transform(array, angle):
 def calculate_coordinates(distance, y_pixel, angle):
     x = dZ - distance
     distance_point_cam = np.sqrt(distance * distance + b * b)
-    y = (y_pixel * c) #+ ((N // 2 * c - (y_pixel * c)) / distance_cam_center) * (distance_cam_center - distance_point_cam)
+    y = (y_pixel * c) + ((N // 2 * c - (y_pixel * c)) / distance_cam_center) * (distance_cam_center - distance_point_cam)
     y = y - (N - jZ) * c
     return [x, y]  # z=0
 

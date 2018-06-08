@@ -10,7 +10,7 @@ d = f * np.tan(alphaz - alpha0)  # halber Durchmesser des Sensors
 M = 640  # Anzahl Spalten pro Bild (wird durch init neu gesetzt)
 N = 480  # Anzahl Zeilen im Bild (wird durch init neu gesetzt)
 c = 1.23448  # Streckungsfaktor
-jZ = 228  # Zeilenindex Mittelpunkt vom Drehteller
+jZ = 412  # Zeilenindex Mittelpunkt vom Drehteller
 distance_cam_center = np.sqrt(dZ * dZ + b * b)  # abstand Mittelpunkt drehteller zur kamera
 
 
@@ -19,7 +19,7 @@ def init(width, height):
     N = height
 
 
-async def transform(array, angle):
+def transform(array, angle):
     res = []
     for coordinates in array:
         distance = abstand_projektionsebene(M - coordinates[0])
@@ -31,7 +31,7 @@ def calculate_coordinates(distance, y_pixel):
     x = dZ - distance
     distance_point_cam = np.sqrt(distance * distance + b * b)
     y = (y_pixel * c) + ((N // 2 * c - (y_pixel * c)) / distance_cam_center) * (distance_cam_center - distance_point_cam)
-    y = y - (N - jZ) * c
+    y = y -(N - jZ) * c
     return [x, y]  # z=0
 
 def rotate(coordinates, angle):
@@ -48,3 +48,6 @@ def abstand_projektionsebene(k):
         phi_k = np.arctan(d * (2 * k - M) / (M * f))
         alphak = alphaz + phi_k
         return b * np.tan(alphak)
+
+
+print(transform(np.array([[M/2,jZ-100]]),0))

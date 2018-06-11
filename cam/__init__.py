@@ -37,7 +37,7 @@ async def get_points():
 
     best_pix = np.stack((best_pix, np.arange(img.shape[0])), axis=1)
 
-    best_pix = np.compress(best_val < (avg * 0.1 + bestval_avg * 0.4), best_pix, axis=0)
+    best_pix = np.compress(best_val < (avg * 0.1 + bestval_avg * 1), best_pix, axis=0)
 
 
     return best_pix

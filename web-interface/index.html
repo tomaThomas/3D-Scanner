@@ -42,7 +42,7 @@
             border: 1px solid black;
             padding: 5px;
             text-align:center;
-            cursor:pointer;
+            cursor:default;
         }
         i {
             vertical-align: middle;
@@ -171,14 +171,13 @@
     </script>
     <script type="text/javascript">
         var socket;
-        var fastmode = "fast";
         toggleMode = function(elem) {
             if(elem.checked) {
-                fastmode = "fast";
+                socket.send({"mode" : "highQuality"})
             } else {
-                fastmode = "slow";
+                socket.send({"mode" : "fastmode"})
             }
-            socket.send({"mode" : fastmode})
+
         }
         setStatus = function (s) {
             document.getElementById("status").innerHTML = s;
@@ -213,7 +212,7 @@
                     document.getElementById("downloadPolygon").setAttribute("href", "data/" + data["url"] + "_mesh.obj");
                 }
                 if(data.hasOwnProperty("exportFinished")) {
-                    $(".downloadText").css({"color" : "black"});
+                    $(".downloadText, .download").css({"color" : "black", "cursor" : "pointer"});
                 }
             }
         };
@@ -232,8 +231,9 @@
             pjs.clearPoints();
 
             if (socket.readyState === socket.OPEN) {
+                toggleMode(document.getElementById("mode"));
                 setStatus("starting scan...");
-                $(".downloadText").css({"color" : "gray"});
+                $(".downloadText, .download").css({"color" : "gray", "cursor" : "default"});
                 socket.send("{\"start\":0}");
             } else {
                 setStatus("can't start: no connection");
@@ -268,8 +268,8 @@
 
         <div>
             <button class="buttons start" type="button" onclick="start()">Start Scan</button>
-            <label class="switch">Fastmode:
-                <input type="checkbox" onclick="toggleMode(this)">
+            <label class="switch">High Quality:
+                <input type="checkbox" onclick="toggleMode(this)" id="mode">
                 <span class="slider round"></span>
             </label>
         </div>

@@ -13,6 +13,7 @@ running = False
 
 async def msg_receive(socket, _):
     global running
+    global mode
     print("client connected")
     try:
         await socket.send(json.dumps({"status": "Connection established"}))
@@ -22,8 +23,21 @@ async def msg_receive(socket, _):
             msg_parsed = json.loads(msg)
             if "running" in msg_parsed:
                 await socket.send(json.dumps({"status": "Connection established"}))
+
+            if "fastmode" in msg_parsed:
+                if not running:
+                    mode = "fast";
+            if "highQuality" in msg_parsed:
+                if not running:
+                    mode = "highQuality"
             if "start" in msg_parsed:
                 if not running:
+                    if mode == "highQuality":
+                        stepper.set_steps_per_scan(200)
+                        stepper.calculate_step_angle()
+                    else:
+                        stepper.set_steps_per_scan(100)
+                        stepper.calculate_step_angle()
                     asyncio.ensure_future(scan(socket))
                 await socket.send(json.dumps({"status": "Scan started"}))
             if "stop" in msg_parsed:
@@ -42,7 +56,7 @@ async def scan(socket):
     global lastPoints
     running = True
     exporter.create()
-    steps = stepper.get_steps_per_scan()
+    steps = stepper.get_steps_per_scan();
     for i in range(steps):
         if not running:
             break

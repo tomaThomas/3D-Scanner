@@ -23,19 +23,23 @@ def transform(array, angle):
     res = []
     for coordinates in array:
         distance = abstand_projektionsebene(M - coordinates[0])
-        if np.abs(dZ - distance) <= 150:   #Punkte außerhalb des Drehtellers werden ignoriert
-            res.append(rotate(calculate_coordinates(distance, coordinates[1]), angle))
+        x = dZ - distance
+        if np.abs(x) <= 150:   #Punkte außerhalb des Drehtellers werden ignoriert
+            y = calculate_y(distance, coordinates[1])
+            if y >= -15 and y <= 265:
+                res.append(rotate(x, y, angle))
     return np.array(res)
 
-def calculate_coordinates(distance, y_pixel):
-    x = dZ - distance
+
+def calculate_y(distance, y_pixel):
     distance_point_cam = np.sqrt(distance * distance + b * b)
     y = (y_pixel * c) + ((N // 2 * c - (y_pixel * c)) / distance_cam_center) * (distance_cam_center - distance_point_cam)
-    y = y -(N - jZ) * c
-    return [x, y]  # z=0
+    y = y - (N - jZ) * c
+    return  y  # z=0
 
-def rotate(coordinates, angle):
-    return [coordinates[0] * np.cos(angle), coordinates[1], -coordinates[0] * np.sin(angle)]
+
+def rotate(x, y, angle):
+    return [x * np.cos(angle), y, x * np.sin(angle)]
 
 
 # Berechnet den Abstand des gefundenen Punktes zum Linienlaser
@@ -48,6 +52,5 @@ def abstand_projektionsebene(k):
         phi_k = np.arctan(d * (2 * k - M) / (M * f))
         alphak = alphaz + phi_k
         return b * np.tan(alphak)
-
 
 

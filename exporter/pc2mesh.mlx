@@ -11,7 +11,7 @@
   <Param type="RichFloat" value="1" name="SamplesPerNode"/>
   <Param type="RichFloat" value="1" name="Offset"/>
  </filter>
- <filter name="Invert Faces Orientation">
+ <!-- <filter name="Invert Faces Orientation">
   <Param type="RichBool" value="true" name="forceFlip"/>
- </filter>
+ </filter> -->
 </FilterScript>

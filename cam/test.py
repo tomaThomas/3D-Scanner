@@ -22,7 +22,7 @@ def get_image():
     camera.capture(image, 'rgb')  # Fills array with current picture
 
 
-orig_img = PIL.Image.open('0806img.png')
+orig_img = PIL.Image.open('testimage6.png')
 hsv_img = orig_img.convert("HSV")
 
 img = np.array(hsv_img)
@@ -48,7 +48,7 @@ print("best:", best_value_single)
 
 best_pix = np.stack((np.arange(img.shape[0]), best_pix), axis=1)
 
-best_pix = np.compress(best_val < (avg * 0.1 + bestval_avg * 1), best_pix, axis=0)
+best_pix = np.compress(best_val < (bestval_avg), best_pix, axis=0)
 
 # convert to displayable image
 img = np.clip(img, 0, 0)

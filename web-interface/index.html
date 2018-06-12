@@ -171,26 +171,13 @@
     </script>
     <script type="text/javascript">
         var socket;
-        uncheckOther = function(elem) {
-            if(elem.id == "fast") {
-                $("#highQuality").prop('checked', false);
-            } else if(elem.id == "highQuality") {
-                $("#fast").prop('checked', false);
-            } else {
-                $("#fast, #highQuality").prop('checked', false);
-            }
-        }
         toggleMode = function(elem) {
-            uncheckOther(elem);
             console.log("testToggle")
-            if(elem.checked && elem.id == "highQuality") {
-                socket.send(JSON.stringify({"highQuality" : "highQuality"}));
-            } else if(elem.checked && elem.id == "fast") {
-                socket.send(JSON.stringify({"fastmode": "fastmode"}));
+            if(elem.checked) {
+                socket.send(JSON.stringify({"highQuality" : "highQuality"}))
             } else {
-                socket.send(JSON.stringify({"normalmode": "normalmode"}));
+                socket.send(JSON.stringify({"fastmode" : "fastmode"}))
             }
-
 
         }
         setStatus = function (s) {
@@ -213,7 +200,7 @@
                 console.log("message received: " + e.data);
                 data = JSON.parse(e.data);
                 if (data.hasOwnProperty("status")) {
-                        setStatus(data['status'])
+                    setStatus(data['status'])
                 }
                 if(data.hasOwnProperty("points")){
                     addPoints(data)
@@ -283,18 +270,12 @@
 
         <div>
             <button class="buttons start" type="button" onclick="start()">Start Scan</button>
-            <label class="switch">High Quality (200 Steps):
-                <input type="checkbox" onclick="toggleMode(this)" id="highQuality">
+            <label class="switch">High Quality:
+                <input type="checkbox" onclick="toggleMode(this)" id="mode">
                 <span class="slider round"></span>
             </label>
         </div>
-        <div>
-            <button class="buttons stop"type="button" onclick="stop()">Stop Scan</button>
-            <label class="switch">Fast Mode (50 Steps):
-                <input type="checkbox" onclick="toggleMode(this)" id="fast">
-                <span class="slider round"></span>
-            </label>
-        </div>
+        <button class="buttons stop"type="button" onclick="stop()">Stop Scan</button>
         <p style="text-align:center;"><label class="progressLabel">Scan Progress</label></p>
         <hr style="border:2px solid black;">
         <div class="progressBarOut" id="progressBarOut">

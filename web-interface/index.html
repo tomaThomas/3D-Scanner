@@ -174,9 +174,9 @@
         toggleMode = function(elem) {
             console.log("testToggle")
             if(elem.checked) {
-                socket.send({"mode" : "highQuality"})
+                socket.send({"highQuality" : "highQuality"})
             } else {
-                socket.send({"mode" : "fastmode"})
+                socket.send({"fastmode" : "fastmode"})
             }
 
         }

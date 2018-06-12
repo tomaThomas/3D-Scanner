@@ -26,7 +26,7 @@ def transform(array, angle):
         x = dZ - distance
         if np.abs(x) <= 150:   #Punkte außerhalb des Drehtellers werden ignoriert
             y = calculate_y(distance, coordinates[1])
-            if y >= -5 and y <= 265:
+            if y >= -15 and y <= 265:
                 res.append(rotate(x, y, angle))
     return np.array(res)
 

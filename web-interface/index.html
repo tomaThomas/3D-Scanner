@@ -172,6 +172,7 @@
     <script type="text/javascript">
         var socket;
         toggleMode = function(elem) {
+            console.log("testToggle")
             if(elem.checked) {
                 socket.send({"mode" : "highQuality"})
             } else {

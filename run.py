@@ -85,6 +85,10 @@ async def scan(socket):
     url = {"url" : name}
     await socket.send(json.dumps(url))
     exporter.export(name)
+
+    
+    export_finished = {"exportFinished" : "true"}
+    await socket.send(json.dumps(export_finished))
     running = False
 
 

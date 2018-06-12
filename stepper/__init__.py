@@ -17,7 +17,12 @@ def get_steps_per_scan():
 
 def get_current_angle():
     return current_angle
-
+def set_steps_per_scan(steps):
+    global steps_per_scan
+    steps_per_scan = steps
+def calculate_step_angle():
+    global step_angle
+    step_angle = 2 * math.pi / steps_per_scan
 
 async def scan_step():
     global current_angle

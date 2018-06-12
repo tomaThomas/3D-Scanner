@@ -15,6 +15,9 @@ def create():
 def add_row(array):
     print("Adding row...")
 
+    point_count = array.shape[0];
+    array = np.reshape(array, (point_count, 3))
+
     global point_list
     point_list = np.append(point_list, array, axis=0)
     return point_list
@@ -29,7 +32,7 @@ def export(name):
     file_pc.close()
 
     print("Running meshlabserver...")
-    os.system(
-        "meshlabserver -i" + path + name + "_pc.obj -o " + path + name + "_mesh.obj -s exporter/cp2mesh.mlx -l pc2mesh_log.txt")
+    os.system("meshlabserver -i" + path + name + "_pc.obj -o " + path + name + "_mesh.obj -s exporter/cp2mesh.mlx -l pc2mesh_log.txt")
     print("Export finished.")
+
     return path + name + "_mesh.obj"

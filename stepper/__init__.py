@@ -21,6 +21,11 @@ def get_current_angle():
 
 def set_steps_per_scan(steps):
     global steps_per_scan
+    global time_per_step
+    if steps <= 50:
+        time_per_step = 0.001
+    else:
+        time_per_step = 0.002
     steps_per_scan = steps
     calculate_step_angle()
 

@@ -22,7 +22,7 @@ def get_image():
     camera.capture(image, 'rgb')  # Fills array with current picture
 
 
-orig_img = PIL.Image.open('spar3.png')
+orig_img = PIL.Image.open('neu.png')
 hsv_img = orig_img.convert("HSV")
 
 img = np.array(hsv_img)
@@ -34,7 +34,7 @@ img += [128, 0, 0]
 img[:,:,0] = img[:,:,0] % 265;
 img += [-109, -200, -255]
 img *= img
-img *= [0.008, 0.0005, 0.0008]
+img *= [0.1, 0.005, 0.08]
 img = img.sum(axis=2)
 
 # find indices of the best scoring pixel in each line

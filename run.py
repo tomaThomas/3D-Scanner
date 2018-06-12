@@ -35,7 +35,10 @@ async def msg_receive(socket, _):
                     if mode == "highQuality":
                         stepper.set_steps_per_scan(200)
                         stepper.calculate_step_angle()
-                    else:
+                    if mode == "fastmode":
+                        stepper.set_steps_per_scan(50)
+                        stepper.calculate_step_angle()
+                    if mode == "normalmode":
                         stepper.set_steps_per_scan(100)
                         stepper.calculate_step_angle()
                     asyncio.ensure_future(scan(socket))
@@ -61,7 +64,7 @@ async def scan(socket):
         if not running:
             break
         print("step " + str(i))
-        progress_json = {'progress': (i/steps)*100}
+        progress_json = {'progress': ((i+1)/steps)*100}
         await socket.send(json.dumps(progress_json))
         points = await cam.get_points()
 

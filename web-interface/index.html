@@ -182,7 +182,6 @@
         }
         setStatus = function (s) {
             document.getElementById("status").innerHTML = s;
-            console.log("Neuer Status: " + s);
         };
         setProgress = function (p) {
             document.getElementById("progressBar").style.width = p + "%";
@@ -201,7 +200,7 @@
                 console.log("message received: " + e.data);
                 data = JSON.parse(e.data);
                 if (data.hasOwnProperty("status")) {
-                        setStatus(data['running'])
+                        setStatus(data['status'])
                 }
                 if(data.hasOwnProperty("points")){
                     addPoints(data)

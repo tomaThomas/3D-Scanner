@@ -23,7 +23,7 @@ async def get_points():
     # score each pixel in the image (operations are performed on every pixel)
     img += [-237, -70, -255]
     img *= img
-    img *= [0.04, 0.00, 0.008]
+    img *= [0.1, 0.00, 0.008]
     img = img.sum(axis=2)
 
 

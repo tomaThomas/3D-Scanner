@@ -21,13 +21,14 @@ async def get_points():
     img = img.astype(float)
 
     # score each pixel in the image (operations are performed on every pixel)
-    img += [-237, -70, -255]
+    img += [128, 0, 0]
+    img[:,:,0] = img[:,:,0] % 265;
+    img += [-109, -200, -255]
     img *= img
-    img *= [0.04, 0.00, 0.008]
+    img *= [0.008, 0.0005, 0.0008]
     img = img.sum(axis=2)
 
-
-# find indices of the best scoring pixel in each line
+    # find indices of the best scoring pixel in each line
     best_pix = img.argmin(1)
     best_val = img[np.arange(img.shape[0]), best_pix]
 

@@ -15,13 +15,11 @@ async def msg_receive(socket, _):
     global running
     print("client connected")
     try:
-        await socket.send(json.dumps({"status": ""}))
+        await socket.send(json.dumps({"status": "Connected"}))
         while True:
             msg = await socket.recv()
             print("message received: {}".format(msg))
             msg_parsed = json.loads(msg)
-            if "running" in msg_parsed:
-                await socket.send(json.dumps({"status": ""}))
             if "start" in msg_parsed:
                 if not running:
                     asyncio.ensure_future(scan(socket))

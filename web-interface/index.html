@@ -172,7 +172,7 @@
     </script>
     <script type="text/javascript">
         var socket;
-        var downloadElems = document.querySelector(".downlaodText, .download");
+        var downloadElems = document.querySelectorAll('.downloadText, .download');
         setStatus = function (s) {
             document.getElementById("status").innerHTML = s;
         };
@@ -232,7 +232,7 @@
                 setStatus("starting scan...");
                 downloadElems.style.color = "gray";
                 downloadElems.style.cursor = "default";
-                
+
                 var steps = document.querySelector('input[name=changeMode]:checked').value;
                 socket.send(JSON.stringify({"start" : "0", "steps" : steps}))
             } else {

@@ -173,7 +173,13 @@
     </script>
     <script type="text/javascript">
         var socket;
-        var downloadElems = document.querySelectorAll('.downloadText, .download');
+        changeDownloadColor = function(pointer, color) {
+            var elems = document.querySelectorAll(".downloadText, .download");
+            for(var i = 0; i < elems.length; i++) {
+                elems[i].style.color = color;
+                elems[i].style.cursor = pointer;
+            }
+        }
         setStatus = function (s) {
             document.getElementById("status").innerHTML = s;
         };
@@ -208,10 +214,7 @@
                 }
                 if(data.hasOwnProperty("exportFinished")) {
 
-                    for(var i = 0; i < downloadElems.length; i++) {
-                        downloadElems[i].style.color = "black";
-                        downloadElems[i].style.cursor = "pointer";
-                    }
+                    changeDownloadColor("cursor", "black");
                     setStatus("Scan finished");
                 }
             }
@@ -233,10 +236,7 @@
             if (socket.readyState === socket.OPEN) {
 
                 setStatus("starting scan...");
-                for(var i = 0; i < downloadElems.length; i++) {
-                    downloadElems[i].style.color = "gray";
-                    downloadElems[i].style.cursor = "default";
-                }
+                changeDownloadColor("default", "gray");
 
 
                 var steps = document.querySelector('input[name=changeMode]:checked').value;

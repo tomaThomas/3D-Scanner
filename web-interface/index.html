@@ -174,19 +174,18 @@
         toggleMode = function(elem) {
             console.log("testToggle")
             if(elem.checked) {
-                socket.send({"mode" : "highQuality"})
+                socket.send(JSON.stringify({"highQuality" : "highQuality"}))
             } else {
-                socket.send({"mode" : "fastmode"})
+                socket.send(JSON.stringify({"fastmode" : "fastmode"}))
             }
 
         }
         setStatus = function (s) {
             document.getElementById("status").innerHTML = s;
-            console.log("Neuer Status: " + s);
         };
         setProgress = function (p) {
             document.getElementById("progressBar").style.width = p + "%";
-            document.getElementById("progress").innerHTML = p.toFixed(0) + "%";
+            document.getElementById("progress").innerHTML = p.toFixed(1) + "%";
         }
 
         window.onload = function (ev) {
@@ -201,7 +200,7 @@
                 console.log("message received: " + e.data);
                 data = JSON.parse(e.data);
                 if (data.hasOwnProperty("status")) {
-                        setStatus(data['running'])
+                    setStatus(data['status'])
                 }
                 if(data.hasOwnProperty("points")){
                     addPoints(data)
@@ -215,6 +214,7 @@
                 }
                 if(data.hasOwnProperty("exportFinished")) {
                     $(".downloadText, .download").css({"color" : "black", "cursor" : "pointer"});
+                    setStatus("Scan finished");
                 }
             }
         };
@@ -281,12 +281,12 @@
         <div class="progressBarOut" id="progressBarOut">
             <div id="progressBar" class="progressBarIn"></div>
         </div>
-        <span id="progress">0%</span>
+        <span id="progress">0.0%</span>
         <div class="download">
             <a style="text-decoration:none;" id="downloadPoints" class="downloadText" download ><i class="fa fa-download"></i> Download 3D-Points</a>
         </div>
         <div class="download">
-            <a style="text-decoration:none;" id="downloadPolygon" class="downloadText" download><i class="fa fa-download"></i> Download 3D-Modell</a>
+            <a style="text-decoration:none;" id="downloadPolygon" class="downloadText" download><i class="fa fa-download"></i> Download 3D-Model</a>
         </div>
     </div>
 </div>

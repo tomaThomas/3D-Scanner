@@ -13,7 +13,6 @@ running = False
 
 async def msg_receive(socket, _):
     global running
-    global mode
     print("client connected")
     try:
         await socket.send(json.dumps({"status": "Connection established"}))
@@ -21,26 +20,13 @@ async def msg_receive(socket, _):
             msg = await socket.recv()
             print("message received: {}".format(msg))
             msg_parsed = json.loads(msg)
+            if "steps" in msg_parsed:
+                if not running:
+                    stepper.set_steps_per_scan(msg_parsed["steps"])
             if "running" in msg_parsed:
                 await socket.send(json.dumps({"status": "Connection established"}))
-
-            if "fastmode" in msg_parsed:
-                if not running:
-                    mode = "fast";
-            if "highQuality" in msg_parsed:
-                if not running:
-                    mode = "highQuality"
             if "start" in msg_parsed:
                 if not running:
-                    if mode == "highQuality":
-                        stepper.set_steps_per_scan(200)
-                        stepper.calculate_step_angle()
-                    if mode == "fastmode":
-                        stepper.set_steps_per_scan(50)
-                        stepper.calculate_step_angle()
-                    if mode == "normalmode":
-                        stepper.set_steps_per_scan(100)
-                        stepper.calculate_step_angle()
                     asyncio.ensure_future(scan(socket))
                 await socket.send(json.dumps({"status": "Scan started"}))
             if "stop" in msg_parsed:
@@ -56,7 +42,6 @@ async def msg_receive(socket, _):
 
 async def scan(socket):
     global running
-    global lastPoints
     running = True
     exporter.create()
     steps = stepper.get_steps_per_scan();
@@ -68,7 +53,7 @@ async def scan(socket):
         await socket.send(json.dumps(progress_json))
         points = await cam.get_points()
 
-        points_transformed =  linearalgebra.transform(points, stepper.get_current_angle())
+        points_transformed = linearalgebra.transform(points, stepper.get_current_angle())
 
         exporter.add_row(points_transformed)
 

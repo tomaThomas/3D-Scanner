@@ -173,15 +173,6 @@
     <script type="text/javascript">
         var socket;
         var downloadElems = document.querySelector(".downlaodText, .download");
-        toggleMode = function(elem) {
-            console.log("testToggle")
-            if(elem.checked) {
-                socket.send(JSON.stringify({"highQuality" : "highQuality"}))
-            } else {
-                socket.send(JSON.stringify({"fastmode" : "fastmode"}))
-            }
-
-        }
         setStatus = function (s) {
             document.getElementById("status").innerHTML = s;
         };
@@ -237,11 +228,11 @@
             pjs.clearPoints();
 
             if (socket.readyState === socket.OPEN) {
-                toggleMode(document.getElementById("mode"));
+
                 setStatus("starting scan...");
                 downloadElems.style.color = "gray";
                 downloadElems.style.cursor = "default";
-                socket.send("{\"start\":0}")
+                
                 var steps = document.querySelector('input[name=changeMode]:checked').value;
                 socket.send(JSON.stringify({"start" : "0", "steps" : steps}))
             } else {
@@ -281,15 +272,15 @@
         </div>
         <div>
             <label class="switch">Fast Mode (50 Steps):
-                <input name="changeMode" type="radio" onclick="toggleMode(this)" id="fast" value="50">
+                <input name="changeMode" type="radio"  id="fast" value="50">
                 <span class="slider round"></span>
             </label>
             <label class="switch">Default Mode (100 Steps):
-                <input name="changeMode" type="radio" onclick="toggleMode(this)" id="default" value="100" checked>
+                <input name="changeMode" type="radio"  id="default" value="100" checked>
                 <span class="slider round"></span>
             </label>
             <label class="switch">High Quality (200 Steps):
-                <input name="changeMode" type="radio" onclick="toggleMode(this)" id="highQuality" value="200">
+                <input name="changeMode" type="radio"  id="highQuality" value="200">
                 <span class="slider round"></span>
             </label>
         </div>

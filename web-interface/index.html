@@ -5,6 +5,7 @@
     <title>3D Scanner Control</title>
     <script src="processing.js" type="text/javascript"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
     <style>
         .buttons {
             width: 150px;
@@ -41,7 +42,7 @@
             border: 1px solid black;
             padding: 5px;
             text-align:center;
-            cursor:pointer;
+            cursor:default;
         }
         i {
             vertical-align: middle;
@@ -77,6 +78,7 @@
             text-align:center;
             color:black;
             line-height:40px;
+            overflow:hidden;
         }
         .progressBarIn {
             background-color: lightgreen;
@@ -84,8 +86,74 @@
             height:40px;
             width:0;
 
+
+        }
+        #progress {
+            margin-top: 10px;
+            font-size:25px;
+
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 190px;
+            height: 34px;
+            text-align: center;
+            font-size:25px;
         }
 
+        .switch input {display:none;}
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: -4px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+            margin-left: 200px;
+            width: 60px;
+            height: 33px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: lightgreen;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px lightgreen;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        .downloadText {
+            color:gray;
+        }
     </style>
     <script type="text/javascript">
         function getProcessingSketchId() {
@@ -103,13 +171,21 @@
     </script>
     <script type="text/javascript">
         var socket;
+        toggleMode = function(elem) {
+            console.log("testToggle")
+            if(elem.checked) {
+                socket.send(JSON.stringify({"highQuality" : "highQuality"}))
+            } else {
+                socket.send(JSON.stringify({"fastmode" : "fastmode"}))
+            }
 
+        }
         setStatus = function (s) {
             document.getElementById("status").innerHTML = s;
         };
         setProgress = function (p) {
             document.getElementById("progressBar").style.width = p + "%";
-            document.getElementById("progressBarOut").innerHTML = p.toFixed(2) + "%";
+            document.getElementById("progress").innerHTML = p.toFixed(1) + "%";
         }
 
         window.onload = function (ev) {
@@ -124,7 +200,7 @@
                 console.log("message received: " + e.data);
                 data = JSON.parse(e.data);
                 if (data.hasOwnProperty("status")) {
-                        setStatus(data['running'])
+                    setStatus(data['status'])
                 }
                 if(data.hasOwnProperty("points")){
                     addPoints(data)
@@ -135,6 +211,10 @@
                 if(data.hasOwnProperty("url")) {
                     document.getElementById("downloadPoints").setAttribute("href", "data/" + data["url"] + "_pc.obj");
                     document.getElementById("downloadPolygon").setAttribute("href", "data/" + data["url"] + "_mesh.obj");
+                }
+                if(data.hasOwnProperty("exportFinished")) {
+                    $(".downloadText, .download").css({"color" : "black", "cursor" : "pointer"});
+                    setStatus("Scan finished");
                 }
             }
         };
@@ -153,7 +233,9 @@
             pjs.clearPoints();
 
             if (socket.readyState === socket.OPEN) {
+                toggleMode(document.getElementById("mode"));
                 setStatus("starting scan...");
+                $(".downloadText, .download").css({"color" : "gray", "cursor" : "default"});
                 socket.send("{\"start\":0}");
             } else {
                 setStatus("can't start: no connection");
@@ -171,7 +253,7 @@
     </script>
 </head>
 <body>
-<span style="position:relative;"></span><h1>3D Scanner Web Interface (<span id="status"></span>)<img class="logo" src="logo.png" alt="logo" /></h1>
+<span style="position:relative;"></span><h1>3D Scanner Web Interface (<span id="status">Not Connected</span>)<img class="logo" src="logo.png" alt="logo" /></h1>
 <hr style="border:2px solid black">
 <div style="display:inline; width:100vw; overflow:hidden;">
     <div style="padding-right: 50px; width:1000px; float:left;">
@@ -186,18 +268,25 @@
     </div>
     <div style="width:40%; overflow:hidden;" class="StartStop">
 
-        <button class="buttons start" type="button" onclick="start()">Start Scan</button>
+        <div>
+            <button class="buttons start" type="button" onclick="start()">Start Scan</button>
+            <label class="switch">High Quality:
+                <input type="checkbox" onclick="toggleMode(this)" id="mode">
+                <span class="slider round"></span>
+            </label>
+        </div>
         <button class="buttons stop"type="button" onclick="stop()">Stop Scan</button>
         <p style="text-align:center;"><label class="progressLabel">Scan Progress</label></p>
         <hr style="border:2px solid black;">
-        <div class="progressBarOut" id="progressBarOut">0%
+        <div class="progressBarOut" id="progressBarOut">
             <div id="progressBar" class="progressBarIn"></div>
         </div>
+        <span id="progress">0.0%</span>
         <div class="download">
-            <i class="fa fa-download"></i><a style="text-decoration:none;" id="downloadPoints" download> Download 3D-Points</a>
+            <a style="text-decoration:none;" id="downloadPoints" class="downloadText" download ><i class="fa fa-download"></i> Download 3D-Points</a>
         </div>
         <div class="download">
-            <i class="fa fa-download"></i><a style="text-decoration:none;" id="downloadPolygon" download> Download 3D-Modell</a>
+            <a style="text-decoration:none;" id="downloadPolygon" class="downloadText" download><i class="fa fa-download"></i> Download 3D-Model</a>
         </div>
     </div>
 </div>

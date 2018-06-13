@@ -20,6 +20,9 @@ async def msg_receive(socket, _):
             msg = await socket.recv()
             print("message received: {}".format(msg))
             msg_parsed = json.loads(msg)
+            if "speed" in msg_parsed:
+                if not running:
+                    stepper.set_steps_per_scan(msg_parsed["speed"])
             if "running" in msg_parsed:
                 await socket.send(json.dumps({"status": "Connection established"}))
             if "start" in msg_parsed:
@@ -39,10 +42,9 @@ async def msg_receive(socket, _):
 
 async def scan(socket):
     global running
-    global lastPoints
     running = True
     exporter.create()
-    steps = stepper.get_steps_per_scan()
+    steps = stepper.get_steps_per_scan();
     for i in range(steps):
         if not running:
             break
@@ -51,7 +53,7 @@ async def scan(socket):
         await socket.send(json.dumps(progress_json))
         points = await cam.get_points()
 
-        points_transformed =  linearalgebra.transform(points, stepper.get_current_angle())
+        points_transformed = linearalgebra.transform(points, stepper.get_current_angle())
 
         exporter.add_row(points_transformed)
 
@@ -71,6 +73,10 @@ async def scan(socket):
     url = {"url" : name}
     await socket.send(json.dumps(url))
     exporter.export(name)
+
+
+    export_finished = {"exportFinished" : "true"}
+    await socket.send(json.dumps(export_finished))
     running = False
 
 

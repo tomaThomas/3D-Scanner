@@ -49,7 +49,7 @@ async def scan(socket):
         if not running:
             break
         print("step " + str(i))
-        progress_json = {'progress': (i/steps)*100}
+        progress_json = {'progress': ((i+1)/steps)*100}
         await socket.send(json.dumps(progress_json))
         points = await cam.get_points()
 

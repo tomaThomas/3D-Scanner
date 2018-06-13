@@ -44,13 +44,6 @@ def rotate(x, y, angle):
 
 # Berechnet den Abstand des gefundenen Punktes zum Linienlaser
 def abstand_projektionsebene(k):
-    if k <= (M // 2):
-        phi_k = np.arctan(d * (M - 2 * k) / (M * f))
-        alphak = alphaz - phi_k
-        return b * np.tan(alphak)
-    else:
-        phi_k = np.arctan(d * (2 * k - M) / (M * f))
-        alphak = alphaz + phi_k
-        return b * np.tan(alphak)
-
-
+    phi_k = np.arctan2(d * (M - 2 * k) , (M * f))
+    alphak = alphaz - phi_k
+    return b * np.tan(alphak)

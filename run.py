@@ -20,9 +20,9 @@ async def msg_receive(socket, _):
             msg = await socket.recv()
             print("message received: {}".format(msg))
             msg_parsed = json.loads(msg)
-            if "speed" in msg_parsed:
+            if "steps" in msg_parsed:
                 if not running:
-                    stepper.set_steps_per_scan(msg_parsed["speed"])
+                    stepper.set_steps_per_scan(msg_parsed["steps"])
             if "running" in msg_parsed:
                 await socket.send(json.dumps({"status": "Connection established"}))
             if "start" in msg_parsed:

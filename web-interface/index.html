@@ -240,7 +240,7 @@
 
 
                 var steps = document.querySelector('input[name=changeMode]:checked').value;
-                socket.send(JSON.stringify({"start" : "0", "steps" : steps}))
+                socket.send(JSON.stringify({"start" : "0", "steps" : parseFloat(steps)}))
             } else {
                 setStatus("can't start: no connection");
             }

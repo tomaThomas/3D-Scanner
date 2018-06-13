@@ -5,7 +5,6 @@
     <title>3D Scanner Control</title>
     <script src="processing.js" type="text/javascript"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery-latest.js"></script>
     <style>
         .buttons {
             width: 150px;
@@ -15,6 +14,7 @@
             margin-bottom: 20px;
             cursor: pointer;
             background-color:lightgrey;
+            display:inline;
 
         }
         .buttons:hover {
@@ -27,7 +27,7 @@
         .start {
             background-color:lightgreen;
             color:white;
-            width:50%;
+            width: 45%;
             height:50px;
             font-size: 20px;
         }
@@ -50,7 +50,7 @@
         .stop {
             background-color:red;
             color:white;
-            width:50%;
+            width:45%;
             height:50px;
             font-size: 20px;
         }
@@ -95,11 +95,12 @@
         }
         .switch {
             position: relative;
-            display: inline-block;
-            width: 190px;
+            display: block;
+            width: 270px;
             height: 34px;
-            text-align: center;
+            text-align: left;
             font-size:25px;
+            margin-top:10px;
         }
 
         .switch input {display:none;}
@@ -114,7 +115,7 @@
             background-color: #ccc;
             -webkit-transition: .4s;
             transition: .4s;
-            margin-left: 200px;
+            margin-left: 300px;
             width: 60px;
             height: 33px;
         }
@@ -171,6 +172,7 @@
     </script>
     <script type="text/javascript">
         var socket;
+        var downloadElems = document.querySelector(".downlaodText, .download");
         toggleMode = function(elem) {
             console.log("testToggle")
             if(elem.checked) {
@@ -213,7 +215,9 @@
                     document.getElementById("downloadPolygon").setAttribute("href", "data/" + data["url"] + "_mesh.obj");
                 }
                 if(data.hasOwnProperty("exportFinished")) {
-                    $(".downloadText, .download").css({"color" : "black", "cursor" : "pointer"});
+
+                    downloadElems.style.color = "black";
+                    downloadElems.style.cursor = "pointer";
                     setStatus("Scan finished");
                 }
             }
@@ -235,8 +239,11 @@
             if (socket.readyState === socket.OPEN) {
                 toggleMode(document.getElementById("mode"));
                 setStatus("starting scan...");
-                $(".downloadText, .download").css({"color" : "gray", "cursor" : "default"});
-                socket.send("{\"start\":0}");
+                downloadElems.style.color = "gray";
+                downloadElems.style.cursor = "default";
+                socket.send("{\"start\":0}")
+                var steps = document.querySelector('input[name=changeMode]:checked').value;
+                socket.send(JSON.stringify({"start" : "0", "steps" : steps}))
             } else {
                 setStatus("can't start: no connection");
             }
@@ -268,14 +275,25 @@
     </div>
     <div style="width:40%; overflow:hidden;" class="StartStop">
 
-        <div>
+        <div style="display:inline;">
             <button class="buttons start" type="button" onclick="start()">Start Scan</button>
-            <label class="switch">High Quality:
-                <input type="checkbox" onclick="toggleMode(this)" id="mode">
+            <button class="buttons stop"type="button" onclick="stop()">Stop Scan</button>
+        </div>
+        <div>
+            <label class="switch">Fast Mode (50 Steps):
+                <input name="changeMode" type="radio" onclick="toggleMode(this)" id="fast" value="50">
+                <span class="slider round"></span>
+            </label>
+            <label class="switch">Default Mode (100 Steps):
+                <input name="changeMode" type="radio" onclick="toggleMode(this)" id="default" value="100" checked>
+                <span class="slider round"></span>
+            </label>
+            <label class="switch">High Quality (200 Steps):
+                <input name="changeMode" type="radio" onclick="toggleMode(this)" id="highQuality" value="200">
                 <span class="slider round"></span>
             </label>
         </div>
-        <button class="buttons stop"type="button" onclick="stop()">Stop Scan</button>
+
         <p style="text-align:center;"><label class="progressLabel">Scan Progress</label></p>
         <hr style="border:2px solid black;">
         <div class="progressBarOut" id="progressBarOut">

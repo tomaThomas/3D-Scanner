@@ -43,6 +43,7 @@
             padding: 5px;
             text-align:center;
             cursor:default;
+
         }
         i {
             vertical-align: middle;
@@ -207,8 +208,10 @@
                 }
                 if(data.hasOwnProperty("exportFinished")) {
 
-                    downloadElems.style.color = "black";
-                    downloadElems.style.cursor = "pointer";
+                    for(var i = 0; i < downloadElems.length; i++) {
+                        downloadElems[i].style.color = "black";
+                        downloadElems[i].style.cursor = "pointer;
+                    }
                     setStatus("Scan finished");
                 }
             }
@@ -230,8 +233,11 @@
             if (socket.readyState === socket.OPEN) {
 
                 setStatus("starting scan...");
-                downloadElems.style.color = "gray";
-                downloadElems.style.cursor = "default";
+                for(var i = 0; i < downloadElems.length; i++) {
+                    downloadElems[i].style.color = "gray";
+                    downloadElems[i].style.cursor = "default";
+                }
+
 
                 var steps = document.querySelector('input[name=changeMode]:checked').value;
                 socket.send(JSON.stringify({"start" : "0", "steps" : steps}))
